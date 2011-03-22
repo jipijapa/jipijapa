@@ -20,32 +20,29 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.as.jpa.spi;
+package org.jboss.as.jpa.persistenceprovider;
 
-import javax.persistence.EntityManager;
+import org.jboss.as.jpa.spi.PersistenceProviderAdaptor;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Query the current context for extended persistence contexts.
+ * Keeps the registry of Persistence Provider adapters
  *
- * @author Scott Marlow (based on code from Carlo de Wolf)
+ * @author Scott Marlow
  */
-public interface XPCResolver {
-    /**
-     * Get an extended persistence context within the current context.
-     * <p/>
-     * Note that the full kernel name must be specified to resolve ambiguity
-     * with persistence units in different modules.
-     *
-     * @param scopedName identification of the persistence context
-     * @return the extended persistence context or null
-     */
-    EntityManager getExtendedPersistenceContext(String scopedName);
+public class PersistenceProviderAdapterRegistry {
 
-    /**
-     * Create the extended persistence context (within the current context)
-     *
-     * @param scopedName the identification of the persistence context
-     * @return the extended persistence context or null
-     */
-    EntityManager createExtendedPersistenceContext(String scopedName);
+    private static final ConcurrentHashMap<String,PersistenceProviderAdaptor>
+        adapterRegistry = new ConcurrentHashMap<String,PersistenceProviderAdaptor>();
+
+    public static PersistenceProviderAdaptor getPersistenceProviderAdaptor(String persistenceProviderClassName) {
+        return adapterRegistry.get(persistenceProviderClassName);
+    }
+
+    public static void putPersistenceProviderAdaptor(
+        String persistenceProviderClassName,
+        PersistenceProviderAdaptor persistenceProviderAdaptor) {
+        adapterRegistry.put(persistenceProviderClassName, persistenceProviderAdaptor);
+    }
 }
