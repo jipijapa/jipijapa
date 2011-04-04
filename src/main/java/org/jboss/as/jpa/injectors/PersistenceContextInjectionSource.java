@@ -22,8 +22,8 @@
 
 package org.jboss.as.jpa.injectors;
 
-import org.jboss.as.ee.component.BindingDescription;
-import org.jboss.as.ee.component.BindingSourceDescription;
+import org.jboss.as.ee.component.ComponentConfiguration;
+import org.jboss.as.ee.component.InjectionSource;
 import org.jboss.as.jpa.container.ExtendedEntityManager;
 import org.jboss.as.jpa.container.NonTxEmCloser;
 import org.jboss.as.jpa.container.SFSBCallStack;
@@ -35,8 +35,10 @@ import org.jboss.as.naming.ManagedReferenceFactory;
 import org.jboss.as.naming.ValueManagedReference;
 import org.jboss.as.server.deployment.DeploymentPhaseContext;
 import org.jboss.as.server.deployment.DeploymentUnit;
+import org.jboss.as.server.deployment.DeploymentUnitProcessingException;
 import org.jboss.jandex.AnnotationValue;
 import org.jboss.logging.Logger;
+
 import org.jboss.msc.inject.Injector;
 import org.jboss.msc.service.ServiceBuilder;
 import org.jboss.msc.service.ServiceName;
@@ -53,7 +55,7 @@ import java.util.Map;
  *
  * @author Scott Marlow
  */
-public class PersistenceContextBindingSourceDescription extends BindingSourceDescription {
+public class PersistenceContextInjectionSource extends InjectionSource {
 
     private final PersistenceContextType type;
 
@@ -81,13 +83,7 @@ public class PersistenceContextBindingSourceDescription extends BindingSourceDes
      * for example "org.hibernate.Session" in which case, EntityManager.unwrap(org.hibernate.Session.class is called)
      * the unwrap return value is injected (instead of the EntityManager instance)
      */
-    public PersistenceContextBindingSourceDescription(
-            final PersistenceContextType type,
-            final Map properties,
-            final ServiceName puServiceName,
-            final DeploymentUnit deploymentUnit,
-            final String scopedPuName,
-            final String injectionTypeName) {
+    public PersistenceContextInjectionSource(final PersistenceContextType type, final Map properties, final ServiceName puServiceName, final DeploymentUnit deploymentUnit, final String scopedPuName, final String injectionTypeName) {
 
         AnnotationValue value;
         this.type = type;
@@ -97,8 +93,7 @@ public class PersistenceContextBindingSourceDescription extends BindingSourceDes
         this.puServiceName=puServiceName;
     }
 
-    @Override
-    public void getResourceValue(BindingDescription referenceDescription, ServiceBuilder<?> serviceBuilder, DeploymentPhaseContext phaseContext, Injector<ManagedReferenceFactory> injector) {
+    public void getResourceValue(final ComponentConfiguration componentConfiguration, final ServiceBuilder<?> serviceBuilder, final DeploymentPhaseContext phaseContext, final Injector<ManagedReferenceFactory> injector) throws DeploymentUnitProcessingException {
         serviceBuilder.addDependencies(puServiceName);
         injector.inject(injectable);
     }
