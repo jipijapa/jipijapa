@@ -23,6 +23,8 @@
 package org.jboss.as.jpa.spi;
 
 
+import java.io.Serializable;
+
 /**
  * Represents a SFSB EJB bean context
  *
@@ -30,8 +32,6 @@ package org.jboss.as.jpa.spi;
  */
 public interface SFSBContextHandle {
 
-    /**
-     * @return an opaque handle to the SFSB bean context handle.
-     */
-    Object getBeanContextHandle();
+    Serializable getSerializable();
+
 }
