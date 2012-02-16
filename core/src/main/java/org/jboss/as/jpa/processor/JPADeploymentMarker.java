@@ -24,6 +24,7 @@ package org.jboss.as.jpa.processor;
 
 import org.jboss.as.server.deployment.AttachmentKey;
 import org.jboss.as.server.deployment.DeploymentUnit;
+import org.jboss.as.server.deployment.DeploymentUtils;
 
 /**
  * JPA Deployment marker
@@ -39,22 +40,16 @@ public class JPADeploymentMarker {
      * marked instead
      */
     public static void mark(DeploymentUnit unit) {
-        if (unit.getParent() == null) {
-            unit.putAttachment(MARKER, Boolean.TRUE);
-        } else {
-            unit.getParent().putAttachment(MARKER, Boolean.TRUE);
-        }
+        unit = DeploymentUtils.getTopDeploymentUnit(unit);
+        unit.putAttachment(MARKER, Boolean.TRUE);
     }
 
     /**
      * return true if the {@link DeploymentUnit} is part of a JPA deployment
      */
     public static boolean isJPADeployment(DeploymentUnit unit) {
-        if (unit.getParent() == null) {
-            return unit.getAttachment(MARKER) != null;
-        } else {
-            return unit.getParent().getAttachment(MARKER) != null;
-        }
+        unit = DeploymentUtils.getTopDeploymentUnit(unit);
+        return unit.getAttachment(MARKER) != null;
     }
 
     private JPADeploymentMarker() {
