@@ -1,0 +1,121 @@
+This library is a collection of utility classes to aid the integration
+of EclipseLink into JBossAS7. It bundles the code from:
+
+  https://community.jboss.org/wiki/HowToUseEclipseLinkWithAS7
+
+into a small JBoss AS 7 module that, when installed and turned on with
+appropriate system properties activates to handle integration between AS7 and
+EclipseLink.
+
+ISSUES RESOLVED BY THE INTEGRATION
+----------------------------------
+
+- EclipseLink doesn't find entity classes unless they're explicitly listed in
+  persistence.xml
+  https://bugs.eclipse.org/bugs/show_bug.cgi?id=383200
+  https://issues.jboss.org/browse/AS7-5062
+  
+- JNDI location for JBoss Transaction Manager is wrong
+  https://bugs.eclipse.org/bugs/show_bug.cgi?id=365704
+  (Workaround only activated on EclipseLink 2.3.2 and below,
+  newer EclipseLink versions include the fix).
+
+- EclipseLink doesn't integrate into JBoss's logging, producing verbose and
+  poorly formatted logs on stderr and not respecting log filtering levels.
+
+ISSUES NOT RESOLVED BY THE INTEGRATION
+--------------------------------------
+
+- Static metamodel isn't populated before user code can access it on JBoss AS
+  7.1.1.Final
+  https://bugs.eclipse.org/bugs/show_bug.cgi?id=383199
+
+Any known issues with EclipseLink + AS7 should be listed on the
+JBoss community link above, and on the EclipseLink bugzilla
+tracking bug for AS7 integration:
+
+  https://bugs.eclipse.org/bugs/show_bug.cgi?id=383201
+
+
+TO BUILD
+--------
+
+To build this module, run:
+
+  mvn -DskipTests=true clean install
+
+Why skip tests? See TESTING below.
+
+
+TO INSTALL ECLIPSELINK AND THE INTEGRATION INTO JBOSS AS 7
+----------------------------------------------------------
+
+The build produces a pair of read-to-install JBoss AS 7 modules for EclipseLink
+and the integration module in target/as7module. You can install them with:
+
+  cp -r target/as7module/* $JBOSS_HOME/modules/
+
+Note that you're installing two modules:
+
+  org.eclipse.persistence
+  id.au.ringerc.eclipselinkintegration
+
+The latter has a META-INF/services entry that *should* cause JBoss AS 7 to
+activate it when an EclipseLink persistence provider is detected, but this
+isn't working for as yet unknown reasons. You must set system properties
+to enable the module:
+
+$JBOSS_HOME/bin/jboss-cli.sh --connect
+
+  /system-property=eclipselink.target-server:add(value=JBoss)
+  /system-property=eclipselink.logging.logger:add(value=id.au.ringerc.as7.eclipselinkintegration.JBossLogger)
+  /system-property=eclipselink.archive.factory:add(value=id.au.ringerc.as7.eclipselinkintegration.JBossArchiveFactoryImpl)
+
+The first two may be set as persistence.xml properties instead. The last must
+be a system property to be recognised by EclipseLink.
+
+DIFFERENT VERSIONS
+------------------
+
+If you want to package a different EclipseLink version, either rebuild with 
+the eclipselink version specified as a build property (recommended, see below)
+or replace the EclipseLink jar in the module and modify module.xml to point
+to the new jar name.
+
+If you want a different version of EclipseLink to be included in the created
+module, you can specify it with the eclipselink.version Maven property, eg;
+
+  mvn -Declipselink.version=2.3.3-M3 clean install
+
+If you're using EclipseLink 2.3.2 or older you must also change the
+eclipselink.target-server system property to:
+
+  /system-property=eclipselink.target-server:add(value=id.au.ringerc.as7.eclipselinkintegration.JBossAS7ServerPlatform)
+
+CONTROLLING LOG LEVELS
+----------------------
+
+You may optionally increase log detail for EclipseLink in AS7:
+
+  jboss-cli.sh --connect '/subsystem=logging/logger=org.eclipse.persistence:add(level=TRACE)'
+
+and/or in the integration module:
+
+  jboss-cli.sh --connect '/subsystem=logging/logger=id.au.ringerc.as7.eclipselinkpersistence:add(level=TRACE)'
+
+TESTING
+-------
+
+Why have tests then skip them?
+
+The tests are Arquillian integration tests that require JBoss AS 7 to be
+running locally on default ports unless overridden, and require the module to
+be installed on the AS7 server. We don't want a build just going ahead and
+installing a module on your AS7 server, so the tests don't do that
+automatically, and will fail if run without that installation being performed.
+Proper integration tests require it to be possible to bundle EclipseLink with
+the test deployment, and that seems to be impossible right now:
+
+  https://community.jboss.org/thread/201605
+
+so you have to install the modules then re-test.

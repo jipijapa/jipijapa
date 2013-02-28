@@ -28,24 +28,24 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.jboss.as</groupId>
-        <artifactId>jboss-as-jpa-parent</artifactId>
-        <version>7.2.0.Alpha1-SNAPSHOT</version>
+        <groupId>org.jipijapa</groupId>
+        <artifactId>jipijapa-parent</artifactId>
+        <version>1.0.0.Alpha1-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.jboss.as</groupId>
-    <artifactId>jboss-as-jpa-openjpa</artifactId>
-    <version>7.2.0.Alpha1-SNAPSHOT</version>
-
-    <name>JBoss Application Server: OpenJPA 2.x JPA integration</name>
+    <groupId>org.jipijapa</groupId>
+    <artifactId>openjpa</artifactId>
+    <version>1.0.0.Alpha1-SNAPSHOT</version>
+    
+    <name>jipijapa OpenJPA integration</name>
 
     <dependencies>
 
         <!-- Internal -->
 
         <dependency>
-            <groupId>org.jboss.as</groupId>
-            <artifactId>jboss-as-jpa-spi</artifactId>
+            <groupId>org.jipijapa</groupId>
+            <artifactId>spi</artifactId>
         </dependency>
 
         <!-- External -->
@@ -53,16 +53,22 @@
         <dependency>
             <groupId>org.apache.openjpa</groupId>
             <artifactId>openjpa-kernel</artifactId>
+            <version>${version.org.apache.openjpa}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.openjpa</groupId>
             <artifactId>openjpa-lib</artifactId>
+            <version>${version.org.apache.openjpa}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.openjpa</groupId>
             <artifactId>openjpa-persistence</artifactId>
+            <version>${version.org.apache.openjpa}</version>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>

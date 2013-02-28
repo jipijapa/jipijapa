@@ -2,7 +2,7 @@
 
 <!--
   ~ JBoss, Home of Professional Open Source.
-  ~ Copyright 2011, Red Hat, Inc., and individual contributors
+  ~ Copyright 2013, Red Hat, Inc., and individual contributors
   ~ as indicated by the @author tags. See the copyright.txt file in the
   ~ distribution for a full listing of individual contributors.
   ~
@@ -27,33 +27,160 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.jboss.as</groupId>
-        <artifactId>jboss-as-parent</artifactId>
-        <version>7.2.0.Alpha1-SNAPSHOT</version>
-    </parent>
-
-    <groupId>org.jboss.as</groupId>
-    <artifactId>jboss-as-jpa-parent</artifactId>
-    <version>7.2.0.Alpha1-SNAPSHOT</version>
+    <groupId>org.jipijapa</groupId>
+    <artifactId>jipijapa-parent</artifactId>
+    <version>1.0.0.Alpha1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>JBoss Application Server: JPA Subsystem</name>
+    <name>jipijapa parent</name>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+       
+        <version.junit>4.11</version.junit>
+        
+        <!-- common properties that can be shared by all projects -->
+        <version.org.jboss.logging.jboss-logging>3.1.2.GA</version.org.jboss.logging.jboss-logging>
+        <version.org.jboss.logging.jboss-logging-processor>1.1.0.Final</version.org.jboss.logging.jboss-logging-processor>
+        <version.org.jboss.logmanager.jboss-logmanager>1.4.0.Final</version.org.jboss.logmanager.jboss-logmanager>
+        <version.org.jboss.logmanager.log4j-jboss-logmanager>1.0.1.Final</version.org.jboss.logmanager.log4j-jboss-logmanager>
+        <version.org.jboss.slf4j.slf4j-jboss-logmanager>1.0.2.GA</version.org.jboss.slf4j.slf4j-jboss-logmanager>
+        <version.org.jboss.logging.jul-to-slf4j-stub>1.0.1.Final</version.org.jboss.logging.jul-to-slf4j-stub>
+        <version.org.slf4j>1.7.2</version.org.slf4j>
+        <version.org.jboss.msc.jboss-msc>1.1.1.Final</version.org.jboss.msc.jboss-msc>
+        <version.org.jboss.spec.javax.transaction.jboss-transaction-api_1.1_spec>1.0.1.Final</version.org.jboss.spec.javax.transaction.jboss-transaction-api_1.1_spec>
+        <version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.1_spec>1.0.2.Final</version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.1_spec>
+        <version.org.jboss.spec.javax.annotation.jboss-annotations-api_1.1_spec>1.0.1.Final</version.org.jboss.spec.javax.annotation.jboss-annotations-api_1.1_spec>
+        <version.jbossas>8.0.0.Alpha1-SNAPSHOT</version.jbossas>
+        <version.org.jboss.web>7.2.0.Final</version.org.jboss.web>
+        <version.antlr>2.7.7</version.antlr>
+        <version.org.hibernate.validator>4.3.1.Final</version.org.hibernate.validator>
+        <version.org.jboss.jboss-common-core>2.2.17.GA</version.org.jboss.jboss-common-core>
+        <version.org.jboss.metadata>7.0.8.Final</version.org.jboss.metadata>
+        
+        <!-- Hibernate 4.2.x/JPA 2.0 -->
+        <version.org.hibernate4_1>4.2.0.CR1</version.org.hibernate4_1>
+        <version.org.hibernate.javax.persistence.hibernate-jpa-2.0-api>1.0.1.Final</version.org.hibernate.javax.persistence.hibernate-jpa-2.0-api>
+        <version.org.hibernate4_1.commons.annotations>4.0.1.Final</version.org.hibernate4_1.commons.annotations>
+        
+        <!-- Hibernate 4.3.x/JPA 2.1 -->
+        <version.org.hibernate4_3>4.3.0-SNAPSHOT</version.org.hibernate4_3>
+        <version.org.hibernate4_3.commons.annotations>4.0.1.Final</version.org.hibernate4_3.commons.annotations>
+        <version.org.hibernate.javax.persistence.hibernate-jpa-2.0-api>1.0.1.Final</version.org.hibernate.javax.persistence.hibernate-jpa-2.0-api>
+        <version.org.hibernate.validator>4.3.1.Final</version.org.hibernate.validator>
+        <version.org.hibernate.javax.persistence.hibernate-jpa-2.1-api>1.0.0.Draft-7plus</version.org.hibernate.javax.persistence.hibernate-jpa-2.1-api>
+
+        <!-- Hibernate 3.x -->
+        <version.org.hibernate3>3.6.6.Final</version.org.hibernate3>
+        <version.org.hibernate3.commons.annotations>3.2.0.Final</version.org.hibernate3.commons.annotations>
+        
+        <!-- EclipseLink -->
+        <eclipselink.version.2.3.stable>2.3.2</eclipselink.version.2.3.stable>
+        <eclipselink.version.2.3.milestone>2.3.3-M3</eclipselink.version.2.3.milestone>
+        <eclipselink.version.2.4.milestone>2.4.0</eclipselink.version.2.4.milestone>
+        <eclipselink.version>${eclipselink.version.2.4.milestone}</eclipselink.version>
+        
+        <!-- OpenJPA -->
+        <version.org.apache.openjpa>2.1.1</version.org.apache.openjpa>
+
+    </properties>
+    
     <modules>
-        <module>core</module>
-        <module>util</module>
         <module>spi</module>
-        <module>hibernate4</module>
+        <module>hibernate4_1</module>
+        <module>hibernate4_3</module>
         <module>hibernate3</module>
         <module>openjpa</module>
+        <module>eclipselink</module>
     </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${version.junit}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jipijapa</groupId>
+                <artifactId>jpa</artifactId>
+                <version>${project.version}</version>
+            	<scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jipijapa</groupId>
+                <artifactId>spi</artifactId>
+                <version>${project.version}</version>
+            	<scope>provided</scope>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.jboss.logging</groupId>
+                <artifactId>jboss-logging</artifactId>
+                <version>${version.org.jboss.logging.jboss-logging}</version>
+            	<scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.logging</groupId>
+                <artifactId>jboss-logging-processor</artifactId>
+                <version>${version.org.jboss.logging.jboss-logging-processor}</version>
+            	<scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.logging</groupId>
+                <artifactId>jul-to-slf4j-stub</artifactId>
+                <version>${version.org.jboss.logging.jul-to-slf4j-stub}</version>
+            	<scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.logmanager</groupId>
+                <artifactId>jboss-logmanager</artifactId>
+                <version>${version.org.jboss.logmanager.jboss-logmanager}</version>
+            	<scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.logmanager</groupId>
+                <artifactId>log4j-jboss-logmanager</artifactId>
+                <version>${version.org.jboss.logmanager.log4j-jboss-logmanager}</version>
+            	<scope>provided</scope>                
+            </dependency>
+            
+            <dependency>
+                <groupId>org.jboss.slf4j</groupId>
+                <artifactId>slf4j-jboss-logmanager</artifactId>
+                <version>${version.org.jboss.slf4j.slf4j-jboss-logmanager}</version>
+            	<scope>provided</scope>                
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${version.org.slf4j}</version>
+            	<scope>provided</scope>                
+            </dependency>
+           
+        </dependencies>
+    </dependencyManagement>
+
+  <repositories>
+    <repository>
+      <id>eclipselink</id>
+      <url>http://www.eclipse.org/downloads/download.php?r=1&amp;nf=1&amp;file=/rt/eclipselink/maven.repo</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+        
 </project>
+
+
+

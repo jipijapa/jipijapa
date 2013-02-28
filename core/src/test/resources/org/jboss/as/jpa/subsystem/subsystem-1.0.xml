@@ -1,3 +1,0 @@
-<subsystem xmlns="urn:jboss:domain:jpa:1.0">
-    <jpa default-datasource=""/>
-</subsystem>
