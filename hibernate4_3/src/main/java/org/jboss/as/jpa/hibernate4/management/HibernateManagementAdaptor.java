@@ -40,6 +40,7 @@ import org.jboss.as.controller.registry.Resource;
 import org.jboss.as.jpa.spi.ManagementAdaptor;
 import org.jboss.as.jpa.spi.PersistenceUnitServiceRegistry;
 import org.jboss.dmr.ModelNode;
+import org.jipijapa.spi.statistics.GroupDefinition;
 
 /**
  * Contains management support for Hibernate
@@ -516,6 +517,11 @@ public class HibernateManagementAdaptor implements ManagementAdaptor {
     @Override
     public String getIdentificationLabel() {
         return PROVIDER_LABEL;
+    }
+
+    @Override
+    public GroupDefinition getAdapterManagementDefinitions() {
+        return null;
     }
 
     abstract class AbstractMetricsHandler extends AbstractRuntimeOnlyHandler {

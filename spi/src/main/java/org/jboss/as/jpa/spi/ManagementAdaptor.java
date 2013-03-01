@@ -24,11 +24,10 @@ package org.jboss.as.jpa.spi;
 
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
 import org.jboss.as.controller.registry.Resource;
+import org.jipijapa.spi.statistics.GroupDefinition;
 
 /**
- * Defines how JPA management is performed in AS7.
- * The first target of this interface will be Hibernate but other implementations
- * could be factored in.
+ * Defines persistence provider management operations/statistics
  *
  * @author Scott Marlow
  */
@@ -44,5 +43,7 @@ public interface ManagementAdaptor {
      * @return id label
      */
     String getIdentificationLabel();
+
+    GroupDefinition getAdapterManagementDefinitions();
 
 }

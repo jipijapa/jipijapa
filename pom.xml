@@ -49,7 +49,7 @@
         <version.org.slf4j>1.7.2</version.org.slf4j>
         <version.org.jboss.msc.jboss-msc>1.1.1.Final</version.org.jboss.msc.jboss-msc>
         <version.org.jboss.spec.javax.transaction.jboss-transaction-api_1.1_spec>1.0.1.Final</version.org.jboss.spec.javax.transaction.jboss-transaction-api_1.1_spec>
-        <version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.1_spec>1.0.2.Final</version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.1_spec>
+        <version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.2_spec>1.0.0.Alpha2</version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.2_spec>
         <version.org.jboss.spec.javax.annotation.jboss-annotations-api_1.1_spec>1.0.1.Final</version.org.jboss.spec.javax.annotation.jboss-annotations-api_1.1_spec>
         <version.jbossas>8.0.0.Alpha1-SNAPSHOT</version.jbossas>
         <version.org.jboss.web>7.2.0.Final</version.org.jboss.web>
@@ -68,7 +68,7 @@
         <version.org.hibernate4_3.commons.annotations>4.0.1.Final</version.org.hibernate4_3.commons.annotations>
         <version.org.hibernate.javax.persistence.hibernate-jpa-2.0-api>1.0.1.Final</version.org.hibernate.javax.persistence.hibernate-jpa-2.0-api>
         <version.org.hibernate.validator>4.3.1.Final</version.org.hibernate.validator>
-        <version.org.hibernate.javax.persistence.hibernate-jpa-2.1-api>1.0.0.Draft-7plus</version.org.hibernate.javax.persistence.hibernate-jpa-2.1-api>
+        <version.org.hibernate.javax.persistence.hibernate-jpa-2.1-api>1.0.0.Draft-10</version.org.hibernate.javax.persistence.hibernate-jpa-2.1-api>
 
         <!-- Hibernate 3.x -->
         <version.org.hibernate3>3.6.6.Final</version.org.hibernate3>
