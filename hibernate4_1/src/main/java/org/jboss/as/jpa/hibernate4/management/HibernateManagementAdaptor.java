@@ -25,6 +25,7 @@ package org.jboss.as.jpa.hibernate4.management;
 import java.util.Locale;
 
 import javax.persistence.Cache;
+import javax.persistence.EntityManagerFactory;
 
 import org.jboss.as.controller.AbstractRuntimeOnlyHandler;
 import org.jboss.as.controller.OperationContext;
@@ -40,7 +41,7 @@ import org.jboss.as.controller.registry.Resource;
 import org.jboss.as.jpa.spi.ManagementAdaptor;
 import org.jboss.as.jpa.spi.PersistenceUnitServiceRegistry;
 import org.jboss.dmr.ModelNode;
-import org.jipijapa.spi.statistics.GroupDefinition;
+import org.jipijapa.spi.statistics.StatisticsPlugin;
 
 /**
  * Contains management support for Hibernate
@@ -52,7 +53,7 @@ public class HibernateManagementAdaptor implements ManagementAdaptor {
     // shared instance for all Hibernate 4 JPA deployments
     private static final HibernateManagementAdaptor INSTANCE = new HibernateManagementAdaptor();
 
-    private static final String PROVIDER_LABEL = "hibernate-persistence-unit";
+    private static final String PROVIDER_LABEL = "hibernate4.1-persistence-unit";
     public static final String OPERATION_CLEAR = "clear";
     public static final String OPERATION_EVICTALL = "evict-all";
     public static final String OPERATION_SUMMARY = "summary";
@@ -90,6 +91,8 @@ public class HibernateManagementAdaptor implements ManagementAdaptor {
     public static final String OPERATION_CLOSE_STATEMENT_COUNT = "close-statement-count";
     public static final String OPERATION_OPTIMISTIC_FAILURE_COUNT = "optimistic-failure-count";
 
+    private static final String VERSION = "Hibernate ORM 4.1.x";
+
     private PersistenceUnitServiceRegistry persistenceUnitRegistry;
 
     /**
@@ -100,7 +103,7 @@ public class HibernateManagementAdaptor implements ManagementAdaptor {
         return INSTANCE;
     }
 
-    @Override
+    // @Override
     public void register(final ManagementResourceRegistration jpaSubsystemDeployments, PersistenceUnitServiceRegistry persistenceUnitRegistry) {
 
         this.persistenceUnitRegistry = persistenceUnitRegistry;
@@ -132,7 +135,7 @@ public class HibernateManagementAdaptor implements ManagementAdaptor {
 
     }
 
-    @Override
+    // @Override
     public Resource createPersistenceUnitResource(final String persistenceUnitName, final String providerLabel) {
         return new HibernateStatisticsResource(persistenceUnitName, persistenceUnitRegistry, providerLabel);
     }
@@ -520,8 +523,13 @@ public class HibernateManagementAdaptor implements ManagementAdaptor {
     }
 
     @Override
-    public GroupDefinition getAdapterManagementDefinitions() {
-        return new HibernateManagementDefinitions();
+    public String getVersion() {
+        return VERSION;
+    }
+
+    @Override
+    public StatisticsPlugin getStatisticsPlugin() {
+        return null;
     }
 
     abstract class AbstractMetricsHandler extends AbstractRuntimeOnlyHandler {

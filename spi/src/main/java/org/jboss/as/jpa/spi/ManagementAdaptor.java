@@ -22,9 +22,7 @@
 
 package org.jboss.as.jpa.spi;
 
-import org.jboss.as.controller.registry.ManagementResourceRegistration;
-import org.jboss.as.controller.registry.Resource;
-import org.jipijapa.spi.statistics.GroupDefinition;
+import org.jipijapa.spi.statistics.StatisticsPlugin;
 
 /**
  * Defines persistence provider management operations/statistics
@@ -33,9 +31,6 @@ import org.jipijapa.spi.statistics.GroupDefinition;
  */
 public interface ManagementAdaptor {
 
-    void register(final ManagementResourceRegistration jpaSubsystemDeployments, final PersistenceUnitServiceRegistry persistenceUnitRegistry);
-
-    Resource createPersistenceUnitResource(final String persistenceUnitName, final String providerLabel);
 
     /**
      * Get the short identification string that represents the management adaptor (e.g Hibernate)
@@ -44,6 +39,13 @@ public interface ManagementAdaptor {
      */
     String getIdentificationLabel();
 
-    GroupDefinition getAdapterManagementDefinitions();
+    /**
+     * Version that uniquely identifies the management adapter (can be used to tell the difference between
+     * Hibernate 4.1 vs 4.3).
+     *
+     * @return version string
+     */
+    String getVersion();
 
+    StatisticsPlugin getStatisticsPlugin();
 }

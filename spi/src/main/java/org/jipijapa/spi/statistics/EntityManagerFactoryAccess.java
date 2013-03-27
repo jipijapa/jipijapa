@@ -17,18 +17,17 @@
 
 package org.jipijapa.spi.statistics;
 
+import javax.persistence.EntityManagerFactory;
+
 /**
- * Description
+ * EntityManagerFactoryAccess
  *
  * @author Scott Marlow
  */
-public interface Description {
-
+public interface EntityManagerFactoryAccess {
     /**
-     * return a unique short name that describes a statistic or operation
-     * @return
+     * returns the entity manager factory that statistics should be obtained for.
+     * @return EntityManagerFactory
      */
-    String getName();
-
-    String getDescription();
+    EntityManagerFactory entityManagerFactory();
 }

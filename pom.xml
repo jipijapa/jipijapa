@@ -87,6 +87,7 @@
     
     <modules>
         <module>spi</module>
+        <module>core</module>
         <module>hibernate4_1</module>
         <module>hibernate4_3</module>
         <module>hibernate3</module>

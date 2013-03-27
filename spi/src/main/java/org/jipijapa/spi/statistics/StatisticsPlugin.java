@@ -14,19 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.jipijapa.spi.statistics;
 
+import javax.persistence.EntityManagerFactory;
+
 /**
- * Result
+ * Defines the contract for a statistics plugin.
  *
+ * @author <a href="jesper.pedersen@jboss.org">Jesper Pedersen</a>
  * @author Scott Marlow
  */
-public interface Result {
+public interface StatisticsPlugin {
 
-    int toInt();
-    long toLong();
-    boolean toBoolean();
-    String toString();
+    /**
+     * return the statistics and nested statistics are accessible
+     * @return statistics
+     */
+    Statistics getStatistics();
+
+    static final String TOPLEVEL_DESCRIPTION_RESOURCEBUNDLE_KEY="hibernate.statistics.description"; // TODO: rename to "statistics.description"
 
 }
