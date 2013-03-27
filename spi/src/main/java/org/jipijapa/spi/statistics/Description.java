@@ -24,6 +24,10 @@ package org.jipijapa.spi.statistics;
  */
 public interface Description {
 
+    /**
+     * return a unique short name that describes a statistic or operation
+     * @return
+     */
     String getName();
 
     String getDescription();

@@ -521,7 +521,7 @@ public class HibernateManagementAdaptor implements ManagementAdaptor {
 
     @Override
     public GroupDefinition getAdapterManagementDefinitions() {
-        return null;
+        return new HibernateManagementDefinitions();
     }
 
     abstract class AbstractMetricsHandler extends AbstractRuntimeOnlyHandler {
