@@ -21,30 +21,16 @@
  */
 package org.jboss.as.jpa.hibernate4;
 
-import org.jboss.as.jpa.spi.PersistenceUnitMetadata;
-
 import org.hibernate.jpa.boot.scan.spi.AbstractScannerImpl;
 import org.hibernate.jpa.boot.scan.spi.Scanner;
 
 /**
- * Annotation scanner for Hibernate
+ * Annotation scanner for Hibernate.  Essentially just passes along the VFS-based ArchiveDescriptorFactory
  *
  * @author Steve Ebersole
- * @author Scott Marlow
- * @author Ales Justin
  */
 public class HibernateArchiveScanner extends AbstractScannerImpl implements Scanner {
-//    private static final ThreadLocal<PersistenceUnitMetadata> PERSISTENCE_UNIT_METADATA_TLS = new ThreadLocal<PersistenceUnitMetadata>();
-
 	public HibernateArchiveScanner() {
 		super( VirtualFileSystemArchiveDescriptorFactory.INSTANCE );
 	}
-
-//	public static void setThreadLocalPersistenceUnitMetadata(final PersistenceUnitMetadata pu) {
-//        PERSISTENCE_UNIT_METADATA_TLS.set(pu);
-//    }
-//
-//    public static void clearThreadLocalPersistenceUnitMetadata() {
-//        PERSISTENCE_UNIT_METADATA_TLS.remove();
-//    }
 }

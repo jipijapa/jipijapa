@@ -32,8 +32,11 @@ import org.hibernate.jpa.boot.spi.InputStreamAccess;
 import org.hibernate.jpa.boot.spi.NamedInputStream;
 
 /**
-* @author Steve Ebersole
-*/
+ * InputStreamAccess provides Hibernate with lazy, on-demand access to InputStreams for the various
+ * types of resources found during archive scanning.
+ *
+ * @author Steve Ebersole
+ */
 public class VirtualFileInputStreamAccess implements InputStreamAccess {
 	private final String name;
 	private final VirtualFile virtualFile;

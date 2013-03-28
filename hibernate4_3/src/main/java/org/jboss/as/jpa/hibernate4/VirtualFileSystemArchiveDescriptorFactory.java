@@ -31,8 +31,11 @@ import org.hibernate.jpa.boot.archive.internal.StandardArchiveDescriptorFactory;
 import org.hibernate.jpa.boot.archive.spi.ArchiveDescriptor;
 
 /**
-* @author Steve Ebersole
-*/
+ * In Hibernate terms, the ArchiveDescriptorFactory contract is used to plug in handling for how to deal
+ * with archives in various systems.  For JBoss, that means its VirtualFileSystem API.
+ *
+ * @author Steve Ebersole
+ */
 public class VirtualFileSystemArchiveDescriptorFactory extends StandardArchiveDescriptorFactory {
 	public static final VirtualFileSystemArchiveDescriptorFactory INSTANCE = new VirtualFileSystemArchiveDescriptorFactory();
 

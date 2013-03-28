@@ -30,8 +30,10 @@ import org.hibernate.jpa.boot.archive.spi.ArchiveEntry;
 import org.hibernate.jpa.boot.spi.InputStreamAccess;
 
 /**
-* @author Steve Ebersole
-*/
+ * Representation of an archive in the JBoss VirtualFileSystem API in terms of how to walk entries.
+ *
+ * @author Steve Ebersole
+ */
 public class VirtualFileSystemArchiveDescriptor implements ArchiveDescriptor {
 	private final VirtualFile root;
 
