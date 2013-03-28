@@ -51,7 +51,7 @@
         <version.org.jboss.spec.javax.transaction.jboss-transaction-api_1.1_spec>1.0.1.Final</version.org.jboss.spec.javax.transaction.jboss-transaction-api_1.1_spec>
         <version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.2_spec>1.0.0.Alpha2</version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.2_spec>
         <version.org.jboss.spec.javax.annotation.jboss-annotations-api_1.1_spec>1.0.1.Final</version.org.jboss.spec.javax.annotation.jboss-annotations-api_1.1_spec>
-        <version.jbossas>8.0.0.Alpha1-SNAPSHOT</version.jbossas>
+        <version.jbossas>7.2.0.Final</version.jbossas>
         <version.org.jboss.web>7.2.0.Final</version.org.jboss.web>
         <version.antlr>2.7.7</version.antlr>
         <version.org.hibernate.validator>4.3.1.Final</version.org.hibernate.validator>
