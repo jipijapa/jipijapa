@@ -1,6 +1,7 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2011, Red Hat, Inc., and individual contributors
+ *
+ * Copyright (c) 2013, Red Hat, Inc., and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -19,47 +20,46 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.jboss.as.jpa.hibernate4;
-
-import static org.jboss.as.jpa.JpaMessages.MESSAGES;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.hibernate.jpa.packaging.spi.NamedInputStream;
+import org.jboss.vfs.VirtualFile;
 
+import org.hibernate.jpa.boot.archive.spi.ArchiveException;
+import org.hibernate.jpa.boot.spi.InputStreamAccess;
+import org.hibernate.jpa.boot.spi.NamedInputStream;
 
 /**
- * Lazy named input stream.
- *
- * @author <a href="mailto:ales.justin@jboss.org">Ales Justin</a>
- *         Scott Marlow
- */
-public abstract class HibernateLazyNamedInputStream extends NamedInputStream {
-    public HibernateLazyNamedInputStream(String name) {
-        super(name, null);
-    }
+* @author Steve Ebersole
+*/
+public class VirtualFileInputStreamAccess implements InputStreamAccess {
+	private final String name;
+	private final VirtualFile virtualFile;
 
-    /**
-     * Get lazy input stream.
-     *
-     * @return the input stream
-     * @throws java.io.IOException for any I/O error
-     */
-    protected abstract InputStream getLazyStream() throws IOException;
+	public VirtualFileInputStreamAccess(String name, VirtualFile virtualFile) {
+		this.name = name;
+		this.virtualFile = virtualFile;
+	}
 
-    @Override
-    public InputStream getStream() {
-        try {
-            return getLazyStream();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+	@Override
+	public String getStreamName() {
+		return name;
+	}
 
-    @Override
-    public void setStream(InputStream stream) {
-        throw MESSAGES.cannotChangeInputStream();
-    }
+	@Override
+	public InputStream accessInputStream() {
+		try {
+			return virtualFile.openStream();
+		}
+		catch (IOException e) {
+			throw new ArchiveException( "Unable to open VirtualFile-based InputStream", e );
+		}
+	}
+
+	@Override
+	public NamedInputStream asNamedInputStream() {
+		return new NamedInputStream( getStreamName(), accessInputStream() );
+	}
 }

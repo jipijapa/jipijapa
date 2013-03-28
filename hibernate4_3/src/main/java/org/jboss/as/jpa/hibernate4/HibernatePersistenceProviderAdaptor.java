@@ -54,7 +54,7 @@ public class HibernatePersistenceProviderAdaptor implements PersistenceProviderA
     @Override
     public void addProviderProperties(Map properties, PersistenceUnitMetadata pu) {
         putPropertyIfAbsent(pu, properties, Configuration.USE_NEW_ID_GENERATOR_MAPPINGS, "true");
-        putPropertyIfAbsent(pu, properties, org.hibernate.ejb.AvailableSettings.SCANNER, HibernateAnnotationScanner.class.getName());
+        putPropertyIfAbsent(pu, properties, org.hibernate.ejb.AvailableSettings.SCANNER, HibernateArchiveScanner.class.getName());
         properties.put(AvailableSettings.APP_CLASSLOADER, pu.getClassLoader());
         putPropertyIfAbsent(pu, properties, AvailableSettings.JTA_PLATFORM, appServerJtaPlatform);
         putPropertyIfAbsent(pu,properties, org.hibernate.ejb.AvailableSettings.ENTITY_MANAGER_FACTORY_NAME, pu.getScopedPersistenceUnitName());
@@ -81,13 +81,13 @@ public class HibernatePersistenceProviderAdaptor implements PersistenceProviderA
     @Override
     public void beforeCreateContainerEntityManagerFactory(PersistenceUnitMetadata pu) {
         // set backdoor annotation scanner access to pu
-        HibernateAnnotationScanner.setThreadLocalPersistenceUnitMetadata(pu);
+//        HibernateArchiveScanner.setThreadLocalPersistenceUnitMetadata( pu );
     }
 
     @Override
     public void afterCreateContainerEntityManagerFactory(PersistenceUnitMetadata pu) {
         // clear backdoor annotation scanner access to pu
-        HibernateAnnotationScanner.clearThreadLocalPersistenceUnitMetadata();
+//        HibernateArchiveScanner.clearThreadLocalPersistenceUnitMetadata();
     }
 
     @Override
@@ -109,8 +109,9 @@ public class HibernatePersistenceProviderAdaptor implements PersistenceProviderA
         return cacheRegionPrefix == null || cacheRegionPrefix.equals(pu.getScopedPersistenceUnitName());
     }
 
+	@Override
     public void cleanup(PersistenceUnitMetadata pu) {
-        HibernateAnnotationScanner.cleanup(pu);
+//        HibernateArchiveScanner.cleanup( pu );
     }
 }
 

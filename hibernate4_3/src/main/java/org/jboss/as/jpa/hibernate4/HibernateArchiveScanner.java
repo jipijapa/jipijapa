@@ -19,43 +19,32 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.jboss.as.jpa.hibernate4;
 
-import static org.jboss.as.jpa.JpaMessages.MESSAGES;
+import org.jboss.as.jpa.spi.PersistenceUnitMetadata;
 
-import org.jboss.vfs.VirtualFile;
-import org.jboss.vfs.VirtualFileFilter;
+import org.hibernate.jpa.boot.scan.spi.AbstractScannerImpl;
+import org.hibernate.jpa.boot.scan.spi.Scanner;
 
 /**
- * Mock work of NativeScanner matching.
+ * Annotation scanner for Hibernate
  *
- * @author <a href="mailto:ales.justin@jboss.org">Ales Justin</a>
+ * @author Steve Ebersole
  * @author Scott Marlow
+ * @author Ales Justin
  */
-public class HibernatePatternFilter implements VirtualFileFilter {
-    private final String pattern;
-    private final boolean exact;
+public class HibernateArchiveScanner extends AbstractScannerImpl implements Scanner {
+//    private static final ThreadLocal<PersistenceUnitMetadata> PERSISTENCE_UNIT_METADATA_TLS = new ThreadLocal<PersistenceUnitMetadata>();
 
-    public HibernatePatternFilter(String pattern) {
-        if (pattern == null)
-            throw MESSAGES.nullVar("pattern");
+	public HibernateArchiveScanner() {
+		super( VirtualFileSystemArchiveDescriptorFactory.INSTANCE );
+	}
 
-        exact = !pattern.contains("/"); // no path split or glob
-        if (exact == false && (pattern.startsWith("**/*"))) {
-            this.pattern = pattern.substring(4);
-        } else {
-            this.pattern = pattern;
-        }
-    }
-
-    protected boolean accepts(String name) {
-        return exact ? name.equals(pattern) : name.endsWith(pattern);
-    }
-
-    public boolean accepts(VirtualFile file) {
-        String name = exact ? file.getName() : file.getPathName();
-        return accepts(name);
-    }
-
+//	public static void setThreadLocalPersistenceUnitMetadata(final PersistenceUnitMetadata pu) {
+//        PERSISTENCE_UNIT_METADATA_TLS.set(pu);
+//    }
+//
+//    public static void clearThreadLocalPersistenceUnitMetadata() {
+//        PERSISTENCE_UNIT_METADATA_TLS.remove();
+//    }
 }

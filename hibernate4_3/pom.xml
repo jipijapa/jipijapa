@@ -40,6 +40,27 @@
     <name>jipijapa Hibernate 4.3.x (JPA 2.1) integration</name>
 
     <dependencies>
+        <!-- testing -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.shrinkwrap</groupId>
+            <artifactId>shrinkwrap-api</artifactId>
+            <version>1.0.0-beta-6</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.shrinkwrap</groupId>
+            <artifactId>shrinkwrap-impl-base</artifactId>
+            <version>1.0.0-beta-6</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Internal -->
 
         <dependency>

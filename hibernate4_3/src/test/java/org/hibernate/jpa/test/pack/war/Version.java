@@ -1,6 +1,7 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2011, Red Hat, Inc., and individual contributors
+ *
+ * Copyright (c) 2013, Red Hat, Inc., and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -19,37 +20,45 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.hibernate.jpa.test.pack.war;
 
-package org.jboss.as.jpa.hibernate4;
-
-import static org.jboss.as.jpa.JpaMessages.MESSAGES;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.jboss.vfs.VirtualFile;
+import javax.persistence.Embeddable;
 
 /**
- * VFS named input stream.
- *
- * @author <a href="mailto:ales.justin@jboss.org">Ales Justin</a>
- * @author Scott Marlow
+ * @author Emmanuel Bernard
  */
-public class HibernateVirtualFileNamedInputStream extends HibernateLazyNamedInputStream {
-    private VirtualFile file;
+@Embeddable
+public class Version {
+	private static final String DOT = ".";
+	private int major;
+	private int minor;
+	private int micro;
 
-    private static String name(VirtualFile file) {
-        if (file == null)
-            throw MESSAGES.nullVar("file");
-        return file.getName();
-    }
+	public int getMajor() {
+		return major;
+	}
 
-    public HibernateVirtualFileNamedInputStream(VirtualFile file) {
-        super(name(file));
-        this.file = file;
-    }
+	public void setMajor(int major) {
+		this.major = major;
+	}
 
-    protected InputStream getLazyStream() throws IOException {
-        return file.openStream();
-    }
+	public int getMinor() {
+		return minor;
+	}
+
+	public void setMinor(int minor) {
+		this.minor = minor;
+	}
+
+	public int getMicro() {
+		return micro;
+	}
+
+	public void setMicro(int micro) {
+		this.micro = micro;
+	}
+
+	public String toString() {
+		return new StringBuffer( major ).append( DOT ).append( minor ).append( DOT ).append( micro ).toString();
+	}
 }
