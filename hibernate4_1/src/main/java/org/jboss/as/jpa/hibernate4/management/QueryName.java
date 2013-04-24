@@ -121,10 +121,6 @@ public class QueryName {
 
     }
 
-    public String getOriginalName() {
-        return hibernateQuery;
-    }
-
     public String getDisplayName() {
         return displayQuery;
     }

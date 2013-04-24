@@ -69,12 +69,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.jboss.spec.javax.ejb</groupId>
-            <artifactId>jboss-ejb-api_3.2_spec</artifactId>
-            <version>${version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.2_spec}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.jboss.spec.javax.transaction</groupId>
             <artifactId>jboss-transaction-api_1.1_spec</artifactId>
             <version>${version.org.jboss.spec.javax.transaction.jboss-transaction-api_1.1_spec}</version>

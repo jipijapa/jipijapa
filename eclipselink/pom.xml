@@ -47,14 +47,13 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- External -->
-
         <dependency>
-            <groupId>org.jboss</groupId>
-            <artifactId>jboss-common-core</artifactId>
-            <version>${version.org.jboss.jboss-common-core}</version>
+            <groupId>org.jipijapa</groupId>
+            <artifactId>core</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <!-- External -->
 
         <dependency>
             <groupId>org.jboss.msc</groupId>

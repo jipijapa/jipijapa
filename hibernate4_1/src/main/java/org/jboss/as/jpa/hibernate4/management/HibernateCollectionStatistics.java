@@ -24,7 +24,7 @@ import java.util.Collections;
 import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.jpa.HibernateEntityManagerFactory;
+import org.hibernate.ejb.HibernateEntityManagerFactory;
 import org.hibernate.stat.CollectionStatistics;
 import org.jipijapa.management.spi.EntityManagerFactoryAccess;
 import org.jipijapa.management.spi.Operation;

@@ -22,7 +22,7 @@
 
 package org.jboss.as.jpa.hibernate3;
 
-import static org.jboss.as.jpa.JpaMessages.MESSAGES;
+import static org.jipijapa.core.JpaMessages.MESSAGES;
 
 import java.io.IOException;
 import java.io.InputStream;

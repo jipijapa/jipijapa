@@ -28,7 +28,7 @@ import javax.transaction.TransactionSynchronizationRegistry;
 import org.hibernate.engine.transaction.jta.platform.internal.JtaSynchronizationStrategy;
 import org.hibernate.engine.transaction.jta.platform.internal.SynchronizationRegistryAccess;
 import org.hibernate.engine.transaction.jta.platform.internal.SynchronizationRegistryBasedSynchronizationStrategy;
-import org.jboss.as.jpa.spi.JtaManager;
+import org.jipijapa.plugin.spi.JtaManager;
 
 
 /**

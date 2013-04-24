@@ -14,24 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jipijapa.spi.statistics;
 
-import javax.persistence.EntityManagerFactory;
+package org.jipijapa.plugin.spi;
+
+import org.jipijapa.management.spi.Statistics;
 
 /**
- * Defines the contract for a statistics plugin.
+ * Defines persistence provider management operations/statistics
  *
- * @author <a href="jesper.pedersen@jboss.org">Jesper Pedersen</a>
  * @author Scott Marlow
  */
-public interface StatisticsPlugin {
+public interface ManagementAdaptor {
+
 
     /**
-     * return the statistics and nested statistics are accessible
-     * @return statistics
+     * Get the short identification string that represents the management adaptor (e.g Hibernate)
+     *
+     * @return id label
      */
+    String getIdentificationLabel();
+
+    /**
+     * Version that uniquely identifies the management adapter (can be used to tell the difference between
+     * Hibernate 4.1 vs 4.3).
+     *
+     * @return version string
+     */
+    String getVersion();
+
     Statistics getStatistics();
-
-    static final String TOPLEVEL_DESCRIPTION_RESOURCEBUNDLE_KEY="hibernate.statistics.description"; // TODO: rename to "statistics.description"
-
 }

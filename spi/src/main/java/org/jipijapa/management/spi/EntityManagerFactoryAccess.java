@@ -15,17 +15,25 @@
  * limitations under the License.
  */
 
-package org.jipijapa.spi.statistics;
+package org.jipijapa.management.spi;
+// todo: package org.jipijapa.spi.jpaint; but take statistisc out of package name
+import javax.persistence.EntityManagerFactory;
 
 /**
- * StatisticName
+ * EntityManagerFactoryAccess
  *
  * @author Scott Marlow
  */
-public interface StatisticName {
+public interface EntityManagerFactoryAccess {
     /**
-     * returns the statistic name
+     * returns the entity manager factory that statistics should be obtained for.
+     * @return EntityManagerFactory
+     */
+    EntityManagerFactory entityManagerFactory();
+
+    /**
+     * return the (application) scoped persistence unit name that the entity manager factory is used with
      * @return
      */
-    String getName();
+    String getScopedPersistenceUnitName();
 }

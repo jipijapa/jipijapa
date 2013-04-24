@@ -15,16 +15,17 @@
  * limitations under the License.
  */
 
-package org.jboss.as.jpa.spi;
+package org.jipijapa.management.spi;
 
 /**
- * PersistenceProvider adaptor
+ * StatisticName
  *
  * @author Scott Marlow
- * @deprecated  replaced by {@link org.jipijapa.plugin.spi.PersistenceProviderAdaptor}
  */
-@Deprecated
-public interface PersistenceProviderAdaptor extends org.jipijapa.plugin.spi.PersistenceProviderAdaptor {
-
+public interface DynamicName {
+    /**
+     * returns the dynamically generated name
+     * @return
+     */
+    String getName();
 }
-

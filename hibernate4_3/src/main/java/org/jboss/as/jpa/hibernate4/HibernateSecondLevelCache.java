@@ -29,11 +29,11 @@ import org.jboss.as.clustering.infinispan.subsystem.CacheConfigurationService;
 import org.jboss.as.clustering.jgroups.subsystem.ChannelService;
 import org.jboss.as.jpa.hibernate4.infinispan.InfinispanRegionFactory;
 import org.jboss.as.jpa.hibernate4.infinispan.SharedInfinispanRegionFactory;
-import org.jboss.as.jpa.spi.PersistenceUnitMetadata;
 import org.jboss.msc.service.ServiceBuilder;
 import org.jboss.msc.service.ServiceRegistry;
 import org.jboss.msc.service.ServiceTarget;
 import org.jboss.msc.service.ServiceBuilder.DependencyType;
+import org.jipijapa.plugin.spi.PersistenceUnitMetadata;
 
 /**
  * Second level cache setup.
@@ -44,7 +44,7 @@ public class HibernateSecondLevelCache {
 
     private static final String DEFAULT_REGION_FACTORY = SharedInfinispanRegionFactory.class.getName();
 
-    public static void addSecondLevelCacheDependencies(ServiceRegistry registry, ServiceTarget target, ServiceBuilder<?> builder, PersistenceUnitMetadata pu) {
+    public static void addSecondLevelCacheDependencies(ServiceBuilder<?> builder, PersistenceUnitMetadata pu) {
         Properties properties = pu.getProperties();
 
         if (properties.getProperty(AvailableSettings.CACHE_REGION_PREFIX) == null) {

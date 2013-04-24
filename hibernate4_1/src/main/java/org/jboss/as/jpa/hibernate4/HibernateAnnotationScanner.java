@@ -22,6 +22,9 @@
 
 package org.jboss.as.jpa.hibernate4;
 
+import static org.jipijapa.core.JpaLogger.JPA_LOGGER;
+import static org.jipijapa.core.JpaMessages.MESSAGES;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.net.URISyntaxException;
@@ -36,16 +39,14 @@ import java.util.Set;
 
 import org.hibernate.ejb.packaging.NamedInputStream;
 import org.hibernate.ejb.packaging.Scanner;
-import org.jboss.as.jpa.spi.PersistenceUnitMetadata;
 import org.jboss.jandex.AnnotationInstance;
 import org.jboss.jandex.ClassInfo;
 import org.jboss.jandex.DotName;
 import org.jboss.jandex.Index;
 import org.jboss.vfs.VFS;
 import org.jboss.vfs.VirtualFile;
+import org.jipijapa.plugin.spi.PersistenceUnitMetadata;
 
-import static org.jboss.as.jpa.JpaLogger.JPA_LOGGER;
-import static org.jboss.as.jpa.JpaMessages.MESSAGES;
 
 /**
  * Annotation scanner for Hibernate

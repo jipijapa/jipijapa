@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-package org.jipijapa.spi.statistics;
+package org.jipijapa.management.spi;
 
-import java.util.Locale;
+import java.util.Collection;
 import java.util.Set;
 
-import javax.persistence.EntityManagerFactory;
+import org.jipijapa.management.spi.DynamicName;
 
 /**
- * Statistics
+ * SPI for statistic plugins to implement.
  *
  * @author Scott Marlow
  */
@@ -36,6 +36,8 @@ public interface Statistics {
      * @return The value
      */
     Set<String> getNames();
+
+    public Collection<String> getDynamicChildrenNames(EntityManagerFactoryAccess entityManagerFactoryAccess);
 
     /**
      * Get the type
@@ -88,7 +90,7 @@ public interface Statistics {
      * @param name The name of the statistics
      * @return The value
      */
-    Object getValue(String name, EntityManagerFactoryAccess entityManagerFactoryAccess, StatisticName statisticName);
+    Object getValue(String name, EntityManagerFactoryAccess entityManagerFactoryAccess, StatisticName statisticName, DynamicName dynamicName);
 
     /**
      * Set the value of the statistic (isWriteable must return true)
@@ -108,7 +110,7 @@ public interface Statistics {
      * @param childName name of the statistics to return
      * @return
      */
-    Statistics getChildren(String childName);
+    Statistics getChild(String childName);
 
 
 }

@@ -10,10 +10,11 @@ import java.util.Set;
 
 import javax.persistence.EntityManagerFactory;
 
-import org.jipijapa.spi.statistics.EntityManagerFactoryAccess;
-import org.jipijapa.spi.statistics.Operation;
-import org.jipijapa.spi.statistics.StatisticName;
-import org.jipijapa.spi.statistics.Statistics;
+import org.jipijapa.management.spi.DynamicName;
+import org.jipijapa.management.spi.EntityManagerFactoryAccess;
+import org.jipijapa.management.spi.Operation;
+import org.jipijapa.management.spi.StatisticName;
+import org.jipijapa.management.spi.Statistics;
 
 /**
  * AbstractStatistics
@@ -54,8 +55,8 @@ public abstract class AbstractStatistics implements Statistics {
     }
 
     @Override
-    public Object getValue(String name, EntityManagerFactoryAccess entityManagerFactoryAccess, StatisticName statisticName) {
-        return operations.get(name).invoke(entityManagerFactoryAccess, statisticName);
+    public Object getValue(String name, EntityManagerFactoryAccess entityManagerFactoryAccess, StatisticName statisticName, DynamicName dynamicName) {
+        return operations.get(name).invoke(entityManagerFactoryAccess, statisticName, dynamicName);
     }
 
     @Override
@@ -68,6 +69,26 @@ public abstract class AbstractStatistics implements Statistics {
             if (arg instanceof EntityManagerFactoryAccess) {
                 EntityManagerFactoryAccess entityManagerFactoryAccess = (EntityManagerFactoryAccess)arg;
                 return entityManagerFactoryAccess.entityManagerFactory();
+            }
+        }
+        return null;
+    }
+
+    protected EntityManagerFactoryAccess getEntityManagerFactoryAccess(Object[] args) {
+        for(Object arg :args) {
+            if (arg instanceof EntityManagerFactoryAccess) {
+                EntityManagerFactoryAccess entityManagerFactoryAccess = (EntityManagerFactoryAccess)arg;
+                return entityManagerFactoryAccess;
+            }
+        }
+        return null;
+    }
+
+    protected String getDynamicName(Object[] args) {
+        for(Object arg :args) {
+            if (arg instanceof DynamicName) {
+                DynamicName name = (DynamicName)arg;
+                return name.getName();
             }
         }
         return null;
@@ -89,7 +110,7 @@ public abstract class AbstractStatistics implements Statistics {
     }
 
     @Override
-    public Statistics getChildren(String childName) {
+    public Statistics getChild(String childName) {
         return null;
     }
 

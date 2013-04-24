@@ -27,7 +27,7 @@ import javax.transaction.TransactionManager;
 
 import org.hibernate.HibernateException;
 import org.hibernate.transaction.JNDITransactionManagerLookup;
-import org.jboss.as.jpa.spi.JtaManager;
+import org.jipijapa.plugin.spi.JtaManager;
 
 
 /**

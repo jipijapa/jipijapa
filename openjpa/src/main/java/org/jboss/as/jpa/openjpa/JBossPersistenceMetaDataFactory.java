@@ -33,12 +33,12 @@ import java.util.Set;
 import javax.persistence.Entity;
 
 import org.apache.openjpa.persistence.PersistenceMetaDataFactory;
-import org.jboss.as.jpa.spi.PersistenceUnitMetadata;
 import org.jboss.jandex.AnnotationInstance;
 import org.jboss.jandex.AnnotationTarget;
 import org.jboss.jandex.ClassInfo;
 import org.jboss.jandex.DotName;
 import org.jboss.jandex.Index;
+import org.jipijapa.plugin.spi.PersistenceUnitMetadata;
 
 /**
  * OpenJPA MetaDataFactory that uses the annotation index provided by PersistenceUnitMetadata

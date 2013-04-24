@@ -28,13 +28,11 @@ import java.util.Properties;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 import org.jboss.as.jpa.hibernate4.management.HibernateManagementAdaptor;
-import org.jboss.as.jpa.spi.JtaManager;
-import org.jboss.as.jpa.spi.ManagementAdaptor;
-import org.jboss.as.jpa.spi.PersistenceProviderAdaptor;
-import org.jboss.as.jpa.spi.PersistenceUnitMetadata;
 import org.jboss.msc.service.ServiceBuilder;
-import org.jboss.msc.service.ServiceRegistry;
-import org.jboss.msc.service.ServiceTarget;
+import org.jipijapa.plugin.spi.JtaManager;
+import org.jipijapa.plugin.spi.ManagementAdaptor;
+import org.jipijapa.plugin.spi.PersistenceProviderAdaptor;
+import org.jipijapa.plugin.spi.PersistenceUnitMetadata;
 
 /**
  * Implements the PersistenceProviderAdaptor for Hibernate
@@ -65,10 +63,10 @@ public class HibernatePersistenceProviderAdaptor implements PersistenceProviderA
     }
 
     @Override
-    public void addProviderDependencies(ServiceRegistry registry, ServiceTarget target, ServiceBuilder<?> builder, PersistenceUnitMetadata pu) {
+    public void addProviderDependencies(ServiceBuilder<?> builder, PersistenceUnitMetadata pu) {
         Properties properties = pu.getProperties();
         if (Boolean.parseBoolean(properties.getProperty(AvailableSettings.USE_SECOND_LEVEL_CACHE))) {
-            HibernateSecondLevelCache.addSecondLevelCacheDependencies(registry, target, builder, pu);
+            HibernateSecondLevelCache.addSecondLevelCacheDependencies(builder, pu);
         }
     }
 

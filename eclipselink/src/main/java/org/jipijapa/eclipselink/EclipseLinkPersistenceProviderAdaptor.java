@@ -2,14 +2,12 @@ package org.jipijapa.eclipselink;
 
 import java.util.Map;
 
-import org.jboss.as.jpa.spi.JtaManager;
-import org.jboss.as.jpa.spi.ManagementAdaptor;
-import org.jboss.as.jpa.spi.PersistenceProviderAdaptor;
-import org.jboss.as.jpa.spi.PersistenceUnitMetadata;
 import org.jboss.logging.Logger;
 import org.jboss.msc.service.ServiceBuilder;
-import org.jboss.msc.service.ServiceRegistry;
-import org.jboss.msc.service.ServiceTarget;
+import org.jipijapa.plugin.spi.JtaManager;
+import org.jipijapa.plugin.spi.ManagementAdaptor;
+import org.jipijapa.plugin.spi.PersistenceProviderAdaptor;
+import org.jipijapa.plugin.spi.PersistenceUnitMetadata;
 
 public class EclipseLinkPersistenceProviderAdaptor implements
         PersistenceProviderAdaptor {
@@ -74,9 +72,7 @@ public class EclipseLinkPersistenceProviderAdaptor implements
     }
 
     @Override
-    public void addProviderDependencies(ServiceRegistry registry,
-            ServiceTarget target, ServiceBuilder<?> builder,
-            PersistenceUnitMetadata pu) {
+    public void addProviderDependencies(ServiceBuilder<?> builder, PersistenceUnitMetadata pu) {
         // No action required
     }
 

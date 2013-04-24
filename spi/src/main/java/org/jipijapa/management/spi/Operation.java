@@ -14,26 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.as.jpa.hibernate4.management;
+
+package org.jipijapa.management.spi;
 
 import javax.persistence.EntityManagerFactory;
 
-import org.jipijapa.spi.statistics.Statistics;
-import org.jipijapa.spi.statistics.StatisticsPlugin;
-
 /**
- * HibernateStatisticsPlugin
+ * Operation
  *
  * @author Scott Marlow
  */
-public class HibernateStatisticsPlugin implements StatisticsPlugin {
+public interface Operation {
 
-    private final Statistics statistics = new HibernateStatistics();;
-
-    @Override
-    public Statistics getStatistics() {
-        return statistics;
-    }
-
-
+    /**
+     * Invoke operation
+     * @param args will be passed to invoked operation
+     * @return
+     */
+    Object invoke(Object... args);
 }

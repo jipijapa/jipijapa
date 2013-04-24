@@ -15,16 +15,29 @@
  * limitations under the License.
  */
 
-package org.jboss.as.jpa.spi;
+package org.jboss.as.jpa.hibernate4.management;
+
+import org.jipijapa.core.AbstractStatistics;
 
 /**
- * PersistenceProvider adaptor
+ * HibernateAbstractStatistics
  *
  * @author Scott Marlow
- * @deprecated  replaced by {@link org.jipijapa.plugin.spi.PersistenceProviderAdaptor}
  */
-@Deprecated
-public interface PersistenceProviderAdaptor extends org.jipijapa.plugin.spi.PersistenceProviderAdaptor {
+public abstract class HibernateAbstractStatistics extends AbstractStatistics {
+
+    private static final String RESOURCE_BUNDLE = HibernateAbstractStatistics.class.getPackage().getName() + ".LocalDescriptions";
+    private static final String RESOURCE_BUNDLE_KEY_PREFIX = "hibernate";
+
+    @Override
+    public String getResourceBundleName() {
+        return RESOURCE_BUNDLE;
+    }
+
+    @Override
+    public String getResourceBundleKeyPrefix() {
+        return RESOURCE_BUNDLE_KEY_PREFIX;
+    }
+
 
 }
-

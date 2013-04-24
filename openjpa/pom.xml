@@ -48,6 +48,12 @@
             <artifactId>spi</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.jipijapa</groupId>
+            <artifactId>core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- External -->
 
         <dependency>

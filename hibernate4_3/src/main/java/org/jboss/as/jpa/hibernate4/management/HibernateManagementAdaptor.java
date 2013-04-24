@@ -23,7 +23,7 @@
 package org.jboss.as.jpa.hibernate4.management;
 
 import org.jboss.as.jpa.spi.ManagementAdaptor;
-import org.jipijapa.spi.statistics.StatisticsPlugin;
+import org.jipijapa.management.spi.Statistics;
 
 /**
  * Contains management support for Hibernate
@@ -32,10 +32,10 @@ import org.jipijapa.spi.statistics.StatisticsPlugin;
  */
 public class HibernateManagementAdaptor implements ManagementAdaptor {
 
-    // shared (per classloader) instance for all Hibernate 4 JPA deployments
+    // shared (per classloader) instance for all Hibernate 4.3 JPA deployments
     private static final HibernateManagementAdaptor INSTANCE = new HibernateManagementAdaptor();
 
-    private final HibernateStatisticsPlugin hibernateStatisticsPlugin = new HibernateStatisticsPlugin();
+    private final Statistics statistics = new HibernateStatistics();
 
     private static final String PROVIDER_LABEL = "hibernate-persistence-unit";
     private static final String VERSION = "Hibernate ORM 4.3.x";
@@ -59,8 +59,8 @@ public class HibernateManagementAdaptor implements ManagementAdaptor {
     }
 
     @Override
-    public StatisticsPlugin getStatisticsPlugin() {
-        return hibernateStatisticsPlugin;
+    public Statistics getStatistics() {
+        return statistics;
     }
 
 

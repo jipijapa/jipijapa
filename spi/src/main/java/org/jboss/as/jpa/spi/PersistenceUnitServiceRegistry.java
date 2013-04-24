@@ -26,17 +26,8 @@ package org.jboss.as.jpa.spi;
  * Registry of started persistence unit services.
  *
  * @author Brian Stansberry (c) 2011 Red Hat Inc.
+ * @deprecated  replaced by {@link org.jipijapa.plugin.spi.PersistenceUnitServiceRegistry}
  */
-public interface PersistenceUnitServiceRegistry {
-
-    /**
-     * Get the persistence unit service associated with the given management resource name.
-     *
-     * @param persistenceUnitResourceName the name of the management resource representing persistence unit, as was previously
-     *                                    provided to {@link ManagementAdaptor#createPersistenceUnitResource(String, String)}
-     * @return a PersistenceUnitService or {@code null} if the persistence unit service has not been started or has been stopped
-     */
-    PersistenceUnitService getPersistenceUnitService(String persistenceUnitResourceName);
-
+public interface PersistenceUnitServiceRegistry extends org.jipijapa.plugin.spi.PersistenceUnitServiceRegistry {
 
 }

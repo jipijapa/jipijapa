@@ -40,8 +40,6 @@ import org.infinispan.manager.EmbeddedCacheManager;
 import org.jboss.as.clustering.infinispan.subsystem.EmbeddedCacheManagerService;
 import org.jboss.as.clustering.msc.ServiceContainerHelper;
 import org.jboss.as.jpa.hibernate4.HibernateSecondLevelCache;
-import org.jboss.as.jpa.spi.PersistenceUnitMetadata;
-import org.jboss.as.jpa.spi.TempClassLoaderFactory;
 import org.jboss.jandex.Index;
 import org.jboss.msc.service.ServiceBuilder;
 import org.jboss.msc.service.ServiceContainer;
@@ -50,6 +48,8 @@ import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.StartException;
 import org.jboss.msc.service.ValueService;
 import org.jboss.msc.value.InjectedValue;
+import org.jipijapa.plugin.spi.PersistenceUnitMetadata;
+import org.jipijapa.plugin.spi.TempClassLoaderFactory;
 
 /**
  * Infinispan-backed region factory for use with standalone (i.e. non-JPA) Hibernate applications.
@@ -84,7 +84,7 @@ public class InfinispanRegionFactory extends org.hibernate.cache.infinispan.Infi
                 .addDependency(EmbeddedCacheManagerService.getServiceName(container), EmbeddedCacheManager.class, manager)
                 .setInitialMode(ServiceController.Mode.ACTIVE)
         ;
-        HibernateSecondLevelCache.addSecondLevelCacheDependencies(target, target, builder, new HibernateMetaData(properties));
+        HibernateSecondLevelCache.addSecondLevelCacheDependencies(builder, new HibernateMetaData(properties));
         try {
             return ServiceContainerHelper.getValue(builder.install());
         } catch (StartException e) {

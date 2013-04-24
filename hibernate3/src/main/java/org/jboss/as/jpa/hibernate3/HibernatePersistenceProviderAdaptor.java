@@ -27,13 +27,11 @@ import java.util.Map;
 
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
-import org.jboss.as.jpa.spi.JtaManager;
-import org.jboss.as.jpa.spi.ManagementAdaptor;
-import org.jboss.as.jpa.spi.PersistenceProviderAdaptor;
-import org.jboss.as.jpa.spi.PersistenceUnitMetadata;
 import org.jboss.msc.service.ServiceBuilder;
-import org.jboss.msc.service.ServiceRegistry;
-import org.jboss.msc.service.ServiceTarget;
+import org.jipijapa.plugin.spi.JtaManager;
+import org.jipijapa.plugin.spi.ManagementAdaptor;
+import org.jipijapa.plugin.spi.PersistenceProviderAdaptor;
+import org.jipijapa.plugin.spi.PersistenceUnitMetadata;
 
 /**
  * Implements the PersistenceProviderAdaptor for Hibernate 3.3.x or higher 3.x
@@ -73,10 +71,7 @@ public class HibernatePersistenceProviderAdaptor implements PersistenceProviderA
     }
 
     @Override
-    public void addProviderDependencies(ServiceRegistry registry, ServiceTarget target, ServiceBuilder<?> builder, PersistenceUnitMetadata pu) {
-        if (Boolean.parseBoolean(pu.getProperties().getProperty(Environment.USE_SECOND_LEVEL_CACHE))) {
-            HibernateSecondLevelCache.addSecondLevelCacheDependencies(registry, target, builder, pu);
-        }
+    public void addProviderDependencies(ServiceBuilder<?> builder, PersistenceUnitMetadata pu) {
     }
 
     private void putPropertyIfAbsent(PersistenceUnitMetadata pu, Map properties, String property, Object value) {

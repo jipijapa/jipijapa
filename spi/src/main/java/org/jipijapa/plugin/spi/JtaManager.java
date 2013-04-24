@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-package org.jipijapa.spi.statistics;
+package org.jipijapa.plugin.spi;
 
-import javax.persistence.EntityManagerFactory;
+import javax.transaction.TransactionManager;
+import javax.transaction.TransactionSynchronizationRegistry;
 
 /**
- * EntityManagerFactoryAccess
+ * Provides access to TSR + TM
  *
  * @author Scott Marlow
  */
-public interface EntityManagerFactoryAccess {
-    /**
-     * returns the entity manager factory that statistics should be obtained for.
-     * @return EntityManagerFactory
-     */
-    EntityManagerFactory entityManagerFactory();
+public interface JtaManager {
+
+    TransactionSynchronizationRegistry getSynchronizationRegistry();
+
+    TransactionManager locateTransactionManager();
 }

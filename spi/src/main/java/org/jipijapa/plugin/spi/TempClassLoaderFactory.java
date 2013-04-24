@@ -20,16 +20,20 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.as.jpa.spi;
+package org.jipijapa.plugin.spi;
 
 /**
  * Factory for creating temporary classloaders used by persistence providers.
  *
  * @author Antti Laisi
- * @deprecated  replaced by {@link org.jipijapa.plugin.spi.TempClassLoaderFactory}
  */
-@Deprecated
-public interface TempClassLoaderFactory extends org.jipijapa.plugin.spi.TempClassLoaderFactory {
+public interface TempClassLoaderFactory {
 
+    /**
+     * Creates a temporary classloader with the same scope and classpath as the persistence unit classloader.
+     *
+     * @see javax.persistence.spi.PersistenceUnitInfo#getNewTempClassLoader()
+     */
+    ClassLoader createNewTempClassLoader();
 
 }

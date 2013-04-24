@@ -20,45 +20,23 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.as.jpa.hibernate4;
-
-import static org.jipijapa.core.JpaMessages.MESSAGES;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.hibernate.ejb.packaging.NamedInputStream;
+package org.jipijapa.plugin.spi;
 
 /**
- * Lazy named input stream.
+ * Registry of started persistence unit services.
  *
- * @author <a href="mailto:ales.justin@jboss.org">Ales Justin</a>
- *         Scott Marlow
+ * @author Brian Stansberry (c) 2011 Red Hat Inc.
  */
-public abstract class HibernateLazyNamedInputStream extends NamedInputStream {
-    public HibernateLazyNamedInputStream(String name) {
-        super(name, null);
-    }
+public interface PersistenceUnitServiceRegistry {
 
     /**
-     * Get lazy input stream.
+     * Get the persistence unit service associated with the given management resource name.
      *
-     * @return the input stream
-     * @throws java.io.IOException for any I/O error
+     * @param persistenceUnitResourceName the name of the management resource representing persistence unit
+     *
+     * @return a PersistenceUnitService or {@code null} if the persistence unit service has not been started or has been stopped
      */
-    protected abstract InputStream getLazyStream() throws IOException;
+    PersistenceUnitService getPersistenceUnitService(String persistenceUnitResourceName);
 
-    @Override
-    public InputStream getStream() {
-        try {
-            return getLazyStream();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    @Override
-    public void setStream(InputStream stream) {
-        throw MESSAGES.cannotChangeInputStream();
-    }
 }

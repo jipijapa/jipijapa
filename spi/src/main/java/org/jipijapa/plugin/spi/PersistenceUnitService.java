@@ -15,16 +15,28 @@
  * limitations under the License.
  */
 
-package org.jboss.as.jpa.spi;
+package org.jipijapa.plugin.spi;
+
+import javax.persistence.EntityManagerFactory;
 
 /**
- * PersistenceProvider adaptor
+ * Persistence unit service
  *
  * @author Scott Marlow
- * @deprecated  replaced by {@link org.jipijapa.plugin.spi.PersistenceProviderAdaptor}
  */
-@Deprecated
-public interface PersistenceProviderAdaptor extends org.jipijapa.plugin.spi.PersistenceProviderAdaptor {
+public interface PersistenceUnitService {
+    /**
+     * get the entity manager factory that represents the persistence unit service.  This corresponds to a
+     * persistence unit definition in a persistence.xml
+     *
+     * @return EntityManagerFactory or {@code null} if this service has not been started or has been stopped
+     */
+    EntityManagerFactory getEntityManagerFactory();
 
+    /**
+     * Gets the scoped name of this persistence unit.
+     *
+     * @return the name
+     */
+    String getScopedPersistenceUnitName();
 }
-

@@ -15,21 +15,17 @@
  * limitations under the License.
  */
 
-package org.jipijapa.spi.statistics;
-
-import javax.persistence.EntityManagerFactory;
+package org.jipijapa.management.spi;
 
 /**
- * Operation
+ * StatisticName
  *
  * @author Scott Marlow
  */
-public interface Operation {
-
+public interface StatisticName {
     /**
-     * Invoke operation
-     * @param args will be passed to invoked operation
+     * returns the statistic name
      * @return
      */
-    Object invoke(Object... args);
+    String getName();
 }
