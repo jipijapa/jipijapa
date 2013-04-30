@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  ~ JBoss, Home of Professional Open Source.
-  ~ Copyright 2013, Red Hat, Inc., and individual contributors
-  ~ as indicated by the @author tags. See the copyright.txt file in the
-  ~ distribution for a full listing of individual contributors.
+  ~  JBoss, Home of Professional Open Source
+  ~  Copyright 2013, Red Hat Middleware LLC, and individual contributors
+  ~  by the @authors tag. See the copyright.txt in the distribution for a
+  ~  full listing of individual contributors.
   ~
-  ~ This is free software; you can redistribute it and/or modify it
-  ~ under the terms of the GNU Lesser General Public License as
-  ~ published by the Free Software Foundation; either version 2.1 of
-  ~ the License, or (at your option) any later version.
-  ~
-  ~ This software is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-  ~ Lesser General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU Lesser General Public
-  ~ License along with this software; if not, write to the Free
-  ~ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-  ~ 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~  http://www.apache.org/licenses/LICENSE-2.0
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -46,12 +41,11 @@
         <version.org.jboss.logmanager.log4j-jboss-logmanager>1.0.1.Final</version.org.jboss.logmanager.log4j-jboss-logmanager>
         <version.org.jboss.slf4j.slf4j-jboss-logmanager>1.0.2.GA</version.org.jboss.slf4j.slf4j-jboss-logmanager>
         <version.org.jboss.logging.jul-to-slf4j-stub>1.0.1.Final</version.org.jboss.logging.jul-to-slf4j-stub>
+        <version.org.jboss.jandex>1.1.0.Alpha1</version.org.jboss.jandex>
         <version.org.slf4j>1.7.2</version.org.slf4j>
-        <version.org.jboss.msc.jboss-msc>1.1.1.Final</version.org.jboss.msc.jboss-msc>
         <version.org.jboss.spec.javax.transaction.jboss-transaction-api_1.1_spec>1.0.1.Final</version.org.jboss.spec.javax.transaction.jboss-transaction-api_1.1_spec>
         <version.org.jboss.spec.javax.annotation.jboss-annotations-api_1.1_spec>1.0.1.Final</version.org.jboss.spec.javax.annotation.jboss-annotations-api_1.1_spec>
         <version.org.jboss.spec.javax.annotation.jboss-annotations-api_1.1_spec>1.0.1.Final</version.org.jboss.spec.javax.annotation.jboss-annotations-api_1.1_spec>
-        <version.jbossas>7.2.0.Final</version.jbossas>
         <version.org.hibernate.validator>4.3.1.Final</version.org.hibernate.validator>
         
         <!-- Hibernate 4.2.x/JPA 2.0 -->
@@ -60,7 +54,7 @@
         <version.org.hibernate4_1.commons.annotations>4.0.1.Final</version.org.hibernate4_1.commons.annotations>
         
         <!-- Hibernate 4.3.x/JPA 2.1 -->
-        <version.org.hibernate4_3>4.3.0-SNAPSHOT</version.org.hibernate4_3>
+        <version.org.hibernate4_3>4.3.0.Beta1</version.org.hibernate4_3>
         <version.org.hibernate4_3.commons.annotations>4.0.1.Final</version.org.hibernate4_3.commons.annotations>
         <version.org.hibernate.javax.persistence.hibernate-jpa-2.0-api>1.0.1.Final</version.org.hibernate.javax.persistence.hibernate-jpa-2.0-api>
         <version.org.hibernate.validator>4.3.1.Final</version.org.hibernate.validator>

@@ -24,20 +24,25 @@ package org.jboss.as.jpa.hibernate4.infinispan;
 
 import java.util.Properties;
 
+import org.hibernate.cache.CacheException;
 import org.infinispan.AdvancedCache;
 import org.infinispan.manager.EmbeddedCacheManager;
-import org.jboss.as.clustering.infinispan.subsystem.EmbeddedCacheManagerService;
-import org.jboss.as.clustering.msc.ServiceContainerHelper;
-import org.jboss.msc.service.ServiceName;
-import org.jboss.msc.service.ServiceRegistry;
+import org.jboss.as.jpa.hibernate4.HibernateSecondLevelCache;
+import org.jipijapa.cache.spi.Classification;
+import org.jipijapa.cache.spi.Wrapper;
+import org.jipijapa.core.internal.Notification;
 
 /**
- * Infinispan-backed region factory that uses retrieves its cache manager from the Infinispan subsystem.
+ * Infinispan-backed region factory that retrieves its cache manager from the Infinispan subsystem.
+ * This is used for (JPA) container managed persistence contexts.
+ * Each deployment application will use a unique Hibernate cache region name in the shared cache.
+ *
  * @author Paul Ferraro
+ * @author Scott Marlow
  */
 public class SharedInfinispanRegionFactory extends InfinispanRegionFactory {
     private static final long serialVersionUID = -3277051412715973863L;
-
+    private volatile Wrapper wrapper;
     public SharedInfinispanRegionFactory() {
         super();
     }
@@ -49,9 +54,15 @@ public class SharedInfinispanRegionFactory extends InfinispanRegionFactory {
     @Override
     protected EmbeddedCacheManager createCacheManager(Properties properties) {
         String container = properties.getProperty(CACHE_CONTAINER, DEFAULT_CACHE_CONTAINER);
-        ServiceName serviceName = EmbeddedCacheManagerService.getServiceName(container);
-        ServiceRegistry registry = ServiceContainerHelper.getCurrentServiceContainer();
-        return (EmbeddedCacheManager) registry.getRequiredService(serviceName).getValue();
+        Properties cacheSettings = new Properties();
+        cacheSettings.put(HibernateSecondLevelCache.CONTAINER, container);
+        try {
+            // Get the (shared) cache manager for JPA application use
+            wrapper = Notification.startCache(Classification.INFINISPAN, cacheSettings);
+            return (EmbeddedCacheManager)wrapper.getValue();
+        } catch (Exception e) {
+            throw new CacheException(e);
+        }
     }
 
     /**
@@ -60,7 +71,8 @@ public class SharedInfinispanRegionFactory extends InfinispanRegionFactory {
      */
     @Override
     protected void stopCacheManager() {
-
+        // notify that the cache is not used but skip the stop since its shared for all jpa applications.
+        Notification.stopCache(Classification.INFINISPAN, wrapper, true);
     }
 
 

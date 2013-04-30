@@ -27,7 +27,6 @@ import java.util.Map;
 
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
-import org.jboss.msc.service.ServiceBuilder;
 import org.jipijapa.plugin.spi.JtaManager;
 import org.jipijapa.plugin.spi.ManagementAdaptor;
 import org.jipijapa.plugin.spi.PersistenceProviderAdaptor;
@@ -71,7 +70,7 @@ public class HibernatePersistenceProviderAdaptor implements PersistenceProviderA
     }
 
     @Override
-    public void addProviderDependencies(ServiceBuilder<?> builder, PersistenceUnitMetadata pu) {
+    public void addProviderDependencies(PersistenceUnitMetadata pu) {
     }
 
     private void putPropertyIfAbsent(PersistenceUnitMetadata pu, Map properties, String property, Object value) {

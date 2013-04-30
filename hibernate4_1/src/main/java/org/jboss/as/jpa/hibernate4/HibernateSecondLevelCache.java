@@ -25,15 +25,10 @@ package org.jboss.as.jpa.hibernate4;
 import java.util.Properties;
 
 import org.hibernate.cfg.AvailableSettings;
-import org.jboss.as.clustering.infinispan.subsystem.CacheConfigurationService;
-import org.jboss.as.clustering.jgroups.subsystem.ChannelService;
 import org.jboss.as.jpa.hibernate4.infinispan.InfinispanRegionFactory;
 import org.jboss.as.jpa.hibernate4.infinispan.SharedInfinispanRegionFactory;
-import org.jboss.msc.service.ServiceBuilder;
-import org.jboss.msc.service.ServiceRegistry;
-import org.jboss.msc.service.ServiceTarget;
-import org.jboss.msc.service.ServiceBuilder.DependencyType;
-import org.jipijapa.plugin.spi.PersistenceUnitMetadata;
+import org.jipijapa.cache.spi.Classification;
+import org.jipijapa.core.internal.Notification;
 
 /**
  * Second level cache setup.
@@ -44,39 +39,61 @@ public class HibernateSecondLevelCache {
 
     private static final String DEFAULT_REGION_FACTORY = SharedInfinispanRegionFactory.class.getName();
 
-    public static void addSecondLevelCacheDependencies(ServiceBuilder<?> builder, PersistenceUnitMetadata pu) {
-        Properties properties = pu.getProperties();
+    public static final String CACHE_TYPE = "cachetype";    // shared (jpa) or private (for native applications)
+    public static final String CONTAINER = "container";
+    public static final String COLLECTION = "collection";
+    public static final String ENTITY = "entity";
+    public static final String NAME = "name";
+    public static final String QUERY = "query";
+    public static final String TIMESTAMPS = "timestamps";
 
-        if (properties.getProperty(AvailableSettings.CACHE_REGION_PREFIX) == null) {
+    public static void addSecondLevelCacheDependencies(Properties mutableProperties, String scopedPersistenceUnitName) {
+
+        if (mutableProperties.getProperty(AvailableSettings.CACHE_REGION_PREFIX) == null) {
             // cache entries for this PU will be identified by scoped pu name + Entity class name
-            String name = pu.getScopedPersistenceUnitName();
-            if (name != null) {
-                properties.setProperty(AvailableSettings.CACHE_REGION_PREFIX, name);
+
+            if (scopedPersistenceUnitName != null) {
+                mutableProperties.setProperty(AvailableSettings.CACHE_REGION_PREFIX, scopedPersistenceUnitName);
             }
         }
-        String regionFactory = properties.getProperty(AvailableSettings.CACHE_REGION_FACTORY);
+        String regionFactory = mutableProperties.getProperty(AvailableSettings.CACHE_REGION_FACTORY);
         if (regionFactory == null) {
             regionFactory = DEFAULT_REGION_FACTORY;
-            properties.setProperty(AvailableSettings.CACHE_REGION_FACTORY, regionFactory);
+            mutableProperties.setProperty(AvailableSettings.CACHE_REGION_FACTORY, regionFactory);
         }
         if (regionFactory.equals(DEFAULT_REGION_FACTORY)) {
             // Set infinispan defaults
-            String container = properties.getProperty(InfinispanRegionFactory.CACHE_CONTAINER);
+            String container = mutableProperties.getProperty(InfinispanRegionFactory.CACHE_CONTAINER);
             if (container == null) {
                 container = InfinispanRegionFactory.DEFAULT_CACHE_CONTAINER;
-                properties.setProperty(InfinispanRegionFactory.CACHE_CONTAINER, container);
+                mutableProperties.setProperty(InfinispanRegionFactory.CACHE_CONTAINER, container);
             }
-            builder.addDependency(DependencyType.OPTIONAL, ChannelService.getServiceName(container));
-            String entity = properties.getProperty(InfinispanRegionFactory.ENTITY_CACHE_RESOURCE_PROP, InfinispanRegionFactory.DEF_ENTITY_RESOURCE);
-            String collection = properties.getProperty(InfinispanRegionFactory.COLLECTION_CACHE_RESOURCE_PROP, InfinispanRegionFactory.DEF_ENTITY_RESOURCE);
-            builder.addDependency(CacheConfigurationService.getServiceName(container, entity));
-            builder.addDependency(CacheConfigurationService.getServiceName(container, collection));
-            if (Boolean.parseBoolean(properties.getProperty(AvailableSettings.USE_QUERY_CACHE))) {
-                String query = properties.getProperty(InfinispanRegionFactory.QUERY_CACHE_RESOURCE_PROP, InfinispanRegionFactory.DEF_QUERY_RESOURCE);
-                String timestamps = properties.getProperty(InfinispanRegionFactory.TIMESTAMPS_CACHE_RESOURCE_PROP, InfinispanRegionFactory.DEF_QUERY_RESOURCE);
-                builder.addDependency(CacheConfigurationService.getServiceName(container, timestamps));
-                builder.addDependency(CacheConfigurationService.getServiceName(container, query));
+
+            /**
+             * AS will need the ServiceBuilder<?> builder that used to be passed to PersistenceProviderAdaptor.addProviderDependencies
+             */
+            Properties cacheSettings = new Properties();
+            cacheSettings.put(CONTAINER, container);
+            cacheSettings.put(ENTITY, mutableProperties.getProperty(InfinispanRegionFactory.ENTITY_CACHE_RESOURCE_PROP, InfinispanRegionFactory.DEF_ENTITY_RESOURCE));
+            cacheSettings.put(COLLECTION, mutableProperties.getProperty(InfinispanRegionFactory.COLLECTION_CACHE_RESOURCE_PROP, InfinispanRegionFactory.DEF_ENTITY_RESOURCE));
+            if (Boolean.parseBoolean(mutableProperties.getProperty(AvailableSettings.USE_QUERY_CACHE))) {
+                cacheSettings.put(QUERY, mutableProperties.getProperty(InfinispanRegionFactory.QUERY_CACHE_RESOURCE_PROP, InfinispanRegionFactory.DEF_QUERY_RESOURCE));
+                cacheSettings.put(TIMESTAMPS, mutableProperties.getProperty(InfinispanRegionFactory.TIMESTAMPS_CACHE_RESOURCE_PROP, InfinispanRegionFactory.DEF_QUERY_RESOURCE));
             }
+            Notification.addCacheDependencies(Classification.INFINISPAN, cacheSettings);
+            // TODO: remove the code below
+            String entity = mutableProperties.getProperty(InfinispanRegionFactory.ENTITY_CACHE_RESOURCE_PROP, InfinispanRegionFactory.DEF_ENTITY_RESOURCE);
+            String collection = mutableProperties.getProperty(InfinispanRegionFactory.COLLECTION_CACHE_RESOURCE_PROP, InfinispanRegionFactory.DEF_ENTITY_RESOURCE);
+            //builder.addDependency(DependencyType.OPTIONAL, ChannelService.getServiceName(container));
+            //builder.addDependency(CacheConfigurationService.getServiceName(container, entity));
+            //builder.addDependency(CacheConfigurationService.getServiceName(container, collection));
+            if (Boolean.parseBoolean(mutableProperties.getProperty(AvailableSettings.USE_QUERY_CACHE))) {
+                String query = mutableProperties.getProperty(InfinispanRegionFactory.QUERY_CACHE_RESOURCE_PROP, InfinispanRegionFactory.DEF_QUERY_RESOURCE);
+                String timestamps = mutableProperties.getProperty(InfinispanRegionFactory.TIMESTAMPS_CACHE_RESOURCE_PROP, InfinispanRegionFactory.DEF_QUERY_RESOURCE);
+                //builder.addDependency(CacheConfigurationService.getServiceName(container, timestamps));
+                //builder.addDependency(CacheConfigurationService.getServiceName(container, query));
+            }
+
         }
     }
 }

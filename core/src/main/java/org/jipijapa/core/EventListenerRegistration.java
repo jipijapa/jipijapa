@@ -15,20 +15,25 @@
  * limitations under the License.
  */
 
-package org.jipijapa.plugin.spi;
+package org.jipijapa.core;
+
+import org.jipijapa.core.internal.Notification;
+import org.jipijapa.event.spi.EventListener;
 
 /**
- * Factory for creating temporary classloaders used by persistence providers.
+ * System level EventListenerRegistration
  *
- * @author Antti Laisi
+ * @author Scott Marlow
  */
-public interface TempClassLoaderFactory {
+public class EventListenerRegistration {
 
-    /**
-     * Creates a temporary classloader with the same scope and classpath as the persistence unit classloader.
-     *
-     * @see javax.persistence.spi.PersistenceUnitInfo#getNewTempClassLoader()
-     */
-    ClassLoader createNewTempClassLoader();
+    public static void add(EventListener eventListener) {
+        Notification.add(eventListener);
+    }
+
+    public static void remove(EventListener eventListener) {
+        Notification.remove(eventListener);
+    }
+
 
 }

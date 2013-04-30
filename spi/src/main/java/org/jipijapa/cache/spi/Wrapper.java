@@ -15,20 +15,15 @@
  * limitations under the License.
  */
 
-package org.jipijapa.plugin.spi;
+package org.jipijapa.cache.spi;
 
 /**
- * Factory for creating temporary classloaders used by persistence providers.
+ * Opaque cache wrapper
  *
- * @author Antti Laisi
+ * @author Scott Marlow
  */
-public interface TempClassLoaderFactory {
+public interface Wrapper {
 
-    /**
-     * Creates a temporary classloader with the same scope and classpath as the persistence unit classloader.
-     *
-     * @see javax.persistence.spi.PersistenceUnitInfo#getNewTempClassLoader()
-     */
-    ClassLoader createNewTempClassLoader();
+    Object getValue();
 
 }

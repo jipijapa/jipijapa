@@ -28,7 +28,6 @@ import java.util.Properties;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 import org.jboss.as.jpa.hibernate4.management.HibernateManagementAdaptor;
-import org.jboss.msc.service.ServiceBuilder;
 import org.jipijapa.plugin.spi.JtaManager;
 import org.jipijapa.plugin.spi.ManagementAdaptor;
 import org.jipijapa.plugin.spi.PersistenceProviderAdaptor;
@@ -64,10 +63,10 @@ public class HibernatePersistenceProviderAdaptor implements PersistenceProviderA
     }
 
     @Override
-    public void addProviderDependencies(ServiceBuilder<?> builder, PersistenceUnitMetadata pu) {
+    public void addProviderDependencies(PersistenceUnitMetadata pu) {
         Properties properties = pu.getProperties();
         if (Boolean.parseBoolean(properties.getProperty(AvailableSettings.USE_SECOND_LEVEL_CACHE))) {
-            HibernateSecondLevelCache.addSecondLevelCacheDependencies(builder, pu);
+            HibernateSecondLevelCache.addSecondLevelCacheDependencies(pu.getProperties(), pu.getScopedPersistenceUnitName());
         }
     }
 

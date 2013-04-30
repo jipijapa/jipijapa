@@ -28,7 +28,8 @@ import java.util.Properties;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 import org.jboss.as.jpa.hibernate4.management.HibernateManagementAdaptor;
-import org.jboss.msc.service.ServiceBuilder;
+import org.jipijapa.cache.spi.Classification;
+import org.jipijapa.core.internal.Notification;
 import org.jipijapa.plugin.spi.JtaManager;
 import org.jipijapa.plugin.spi.ManagementAdaptor;
 import org.jipijapa.plugin.spi.PersistenceProviderAdaptor;
@@ -63,10 +64,10 @@ public class HibernatePersistenceProviderAdaptor implements PersistenceProviderA
     }
 
     @Override
-    public void addProviderDependencies(ServiceBuilder<?> builder, PersistenceUnitMetadata pu) {
+    public void addProviderDependencies(PersistenceUnitMetadata pu) {
         Properties properties = pu.getProperties();
         if (Boolean.parseBoolean(properties.getProperty(AvailableSettings.USE_SECOND_LEVEL_CACHE))) {
-            HibernateSecondLevelCache.addSecondLevelCacheDependencies(builder, pu);
+            HibernateSecondLevelCache.addSecondLevelCacheDependencies(pu.getProperties(), pu.getScopedPersistenceUnitName());
         }
     }
 
@@ -78,14 +79,12 @@ public class HibernatePersistenceProviderAdaptor implements PersistenceProviderA
 
     @Override
     public void beforeCreateContainerEntityManagerFactory(PersistenceUnitMetadata pu) {
-        // set backdoor annotation scanner access to pu
-//        HibernateArchiveScanner.setThreadLocalPersistenceUnitMetadata( pu );
+        Notification.beforeEntityManagerFactoryCreate(Classification.INFINISPAN, pu);
     }
 
     @Override
     public void afterCreateContainerEntityManagerFactory(PersistenceUnitMetadata pu) {
-        // clear backdoor annotation scanner access to pu
-//        HibernateArchiveScanner.clearThreadLocalPersistenceUnitMetadata();
+        Notification.afterEntityManagerFactoryCreate(Classification.INFINISPAN, pu);
     }
 
     @Override

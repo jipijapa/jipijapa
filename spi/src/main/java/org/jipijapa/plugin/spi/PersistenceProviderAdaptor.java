@@ -19,8 +19,6 @@ package org.jipijapa.plugin.spi;
 
 import java.util.Map;
 
-import org.jboss.msc.service.ServiceBuilder;
-
 /**
  * PersistenceProvider adaptor
  *
@@ -44,13 +42,13 @@ public interface PersistenceProviderAdaptor {
     void addProviderProperties(Map properties, PersistenceUnitMetadata pu);
 
     /**
-     * Persistence provider integration code might want to specify some module dependencies that must be started
+     * Persistence provider integration code might need dependencies that must be started
      * for the deployment.  Note that these dependency classes are expected to be already available to the provider.
      *
      * @param pu
      * @return
      */
-    void addProviderDependencies(ServiceBuilder<?> builder, PersistenceUnitMetadata pu);
+    void addProviderDependencies(PersistenceUnitMetadata pu);
 
     /**
      * Called right before persistence provider is invoked to create container entity manager factory.
