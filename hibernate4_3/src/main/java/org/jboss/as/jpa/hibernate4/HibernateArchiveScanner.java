@@ -30,7 +30,7 @@ import org.hibernate.jpa.boot.scan.spi.Scanner;
  * @author Steve Ebersole
  */
 public class HibernateArchiveScanner extends AbstractScannerImpl implements Scanner {
-	public HibernateArchiveScanner() {
-		super( VirtualFileSystemArchiveDescriptorFactory.INSTANCE );
-	}
+    public HibernateArchiveScanner() {
+        super( VirtualFileSystemArchiveDescriptorFactory.INSTANCE );
+    }
 }

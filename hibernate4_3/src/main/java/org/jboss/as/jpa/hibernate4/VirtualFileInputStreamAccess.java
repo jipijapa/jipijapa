@@ -38,31 +38,31 @@ import org.hibernate.jpa.boot.spi.NamedInputStream;
  * @author Steve Ebersole
  */
 public class VirtualFileInputStreamAccess implements InputStreamAccess {
-	private final String name;
-	private final VirtualFile virtualFile;
+    private final String name;
+    private final VirtualFile virtualFile;
 
-	public VirtualFileInputStreamAccess(String name, VirtualFile virtualFile) {
-		this.name = name;
-		this.virtualFile = virtualFile;
-	}
+    public VirtualFileInputStreamAccess(String name, VirtualFile virtualFile) {
+        this.name = name;
+        this.virtualFile = virtualFile;
+    }
 
-	@Override
-	public String getStreamName() {
-		return name;
-	}
+    @Override
+    public String getStreamName() {
+        return name;
+    }
 
-	@Override
-	public InputStream accessInputStream() {
-		try {
-			return virtualFile.openStream();
-		}
-		catch (IOException e) {
-			throw new ArchiveException( "Unable to open VirtualFile-based InputStream", e );
-		}
-	}
+    @Override
+    public InputStream accessInputStream() {
+        try {
+            return virtualFile.openStream();
+        }
+        catch (IOException e) {
+            throw new ArchiveException( "Unable to open VirtualFile-based InputStream", e );
+        }
+    }
 
-	@Override
-	public NamedInputStream asNamedInputStream() {
-		return new NamedInputStream( getStreamName(), accessInputStream() );
-	}
+    @Override
+    public NamedInputStream asNamedInputStream() {
+        return new NamedInputStream( getStreamName(), accessInputStream() );
+    }
 }

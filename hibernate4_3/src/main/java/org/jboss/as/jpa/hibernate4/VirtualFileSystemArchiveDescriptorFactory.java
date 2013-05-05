@@ -37,15 +37,15 @@ import org.hibernate.jpa.boot.archive.spi.ArchiveDescriptor;
  * @author Steve Ebersole
  */
 public class VirtualFileSystemArchiveDescriptorFactory extends StandardArchiveDescriptorFactory {
-	public static final VirtualFileSystemArchiveDescriptorFactory INSTANCE = new VirtualFileSystemArchiveDescriptorFactory();
+    public static final VirtualFileSystemArchiveDescriptorFactory INSTANCE = new VirtualFileSystemArchiveDescriptorFactory();
 
-	@Override
-	public ArchiveDescriptor buildArchiveDescriptor(URL url, String entryBase) {
-		try {
-			return new VirtualFileSystemArchiveDescriptor( VFS.getChild( url.toURI() ), entryBase );
-		}
-		catch (URISyntaxException e) {
-			throw new IllegalArgumentException( e );
-		}
-	}
+    @Override
+    public ArchiveDescriptor buildArchiveDescriptor(URL url, String entryBase) {
+        try {
+            return new VirtualFileSystemArchiveDescriptor( VFS.getChild( url.toURI() ), entryBase );
+        }
+        catch (URISyntaxException e) {
+            throw new IllegalArgumentException( e );
+        }
+    }
 }

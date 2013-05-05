@@ -17,8 +17,6 @@
 
 package org.jboss.as.jpa.spi;
 
-import javax.persistence.EntityManagerFactory;
-
 /**
  * Persistence unit service
  *

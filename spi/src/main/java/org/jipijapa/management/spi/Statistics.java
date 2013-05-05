@@ -20,8 +20,6 @@ package org.jipijapa.management.spi;
 import java.util.Collection;
 import java.util.Set;
 
-import org.jipijapa.management.spi.DynamicName;
-
 /**
  * SPI for statistic plugins to implement.
  *
@@ -37,7 +35,7 @@ public interface Statistics {
      */
     Set<String> getNames();
 
-    public Collection<String> getDynamicChildrenNames(EntityManagerFactoryAccess entityManagerFactoryAccess);
+    Collection<String> getDynamicChildrenNames(EntityManagerFactoryAccess entityManagerFactoryAccess);
 
     /**
      * Get the type

@@ -31,7 +31,7 @@ import org.jipijapa.plugin.spi.PersistenceUnitMetadata;
  * @author Scott Marlow
  */
 public class Notification {
-    static private final CopyOnWriteArrayList<EventListener> eventListeners = new CopyOnWriteArrayList<EventListener>();
+    private static final CopyOnWriteArrayList<EventListener> eventListeners = new CopyOnWriteArrayList<EventListener>();
 
     public static void add(EventListener eventListener) {
         eventListeners.add(eventListener);

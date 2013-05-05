@@ -17,8 +17,6 @@
 
 package org.jipijapa.management.spi;
 
-import javax.persistence.EntityManagerFactory;
-
 /**
  * Operation
  *

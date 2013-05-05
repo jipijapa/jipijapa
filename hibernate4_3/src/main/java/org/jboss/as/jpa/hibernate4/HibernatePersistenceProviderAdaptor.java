@@ -106,9 +106,9 @@ public class HibernatePersistenceProviderAdaptor implements PersistenceProviderA
         return cacheRegionPrefix == null || cacheRegionPrefix.equals(pu.getScopedPersistenceUnitName());
     }
 
-	@Override
+    @Override
     public void cleanup(PersistenceUnitMetadata pu) {
-//        HibernateArchiveScanner.cleanup( pu );
+
     }
 }
 
