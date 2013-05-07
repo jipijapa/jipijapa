@@ -29,6 +29,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.jpa.HibernateEntityManagerFactory;
 import org.jipijapa.management.spi.EntityManagerFactoryAccess;
 import org.jipijapa.management.spi.Operation;
+import org.jipijapa.management.spi.PathAddress;
 
 /**
  * Hibernate entity statistics
@@ -123,9 +124,9 @@ public class HibernateEntityStatistics extends HibernateAbstractStatistics {
     }
 
     @Override
-    public Collection<String> getDynamicChildrenNames(EntityManagerFactoryAccess entityManagerFactoryLookup) {
+    public Collection<String> getDynamicChildrenNames(EntityManagerFactoryAccess entityManagerFactoryLookup, PathAddress pathAddress) {
 
         return Collections.unmodifiableCollection(Arrays.asList(
-                getBaseStatistics(entityManagerFactoryLookup.entityManagerFactory()).getEntityNames()));
+                getBaseStatistics(entityManagerFactoryLookup.entityManagerFactory(pathAddress.getValue(HibernateStatistics.PROVIDER_LABEL))).getEntityNames()));
     }
 }

@@ -68,9 +68,9 @@ public class HibernateEntityCacheStatistics extends HibernateAbstractStatistics 
     }
 
     @Override
-    public Collection<String> getDynamicChildrenNames(EntityManagerFactoryAccess entityManagerFactoryLookup) {
+    public Collection<String> getDynamicChildrenNames(EntityManagerFactoryAccess entityManagerFactoryLookup, PathAddress pathAddress) {
         return Collections.unmodifiableCollection(Arrays.asList(
-                getBaseStatistics(entityManagerFactoryLookup.entityManagerFactory()).getEntityNames()));
+                getBaseStatistics(entityManagerFactoryLookup.entityManagerFactory(pathAddress.getValue(HibernateStatistics.PROVIDER_LABEL))).getEntityNames()));
     }
 
     private org.hibernate.stat.Statistics getBaseStatistics(EntityManagerFactory entityManagerFactory) {
@@ -82,15 +82,15 @@ public class HibernateEntityCacheStatistics extends HibernateAbstractStatistics 
         return null;
     }
 
-    org.hibernate.stat.SecondLevelCacheStatistics getStatistics(EntityManagerFactoryAccess entityManagerFactoryaccess, PathAddress entityCacheRegionName) {
-
-        HibernateEntityManagerFactory entityManagerFactoryImpl = (HibernateEntityManagerFactory) entityManagerFactoryaccess.entityManagerFactory();
+    org.hibernate.stat.SecondLevelCacheStatistics getStatistics(EntityManagerFactoryAccess entityManagerFactoryaccess, PathAddress pathAddress) {
+        String scopedPersistenceUnitName = pathAddress.getValue(HibernateStatistics.PROVIDER_LABEL);
+        HibernateEntityManagerFactory entityManagerFactoryImpl = (HibernateEntityManagerFactory) entityManagerFactoryaccess.entityManagerFactory(scopedPersistenceUnitName);
         SessionFactory sessionFactory = entityManagerFactoryImpl.getSessionFactory();
         if (sessionFactory != null) {
             // The entity class name is prefixed by the application scoped persistence unit name
-            String scopedPersistenceUnitName = entityManagerFactoryaccess.getScopedPersistenceUnitName();
+
             return sessionFactory.getStatistics().getSecondLevelCacheStatistics(scopedPersistenceUnitName + "." +
-                    entityCacheRegionName.getValue(HibernateStatistics.ENTITYCACHE));
+                    pathAddress.getValue(HibernateStatistics.ENTITYCACHE));
         }
         return null;
     }

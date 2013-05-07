@@ -17,7 +17,11 @@
 
 package org.jboss.as.jpa.hibernate4.management;
 
+import javax.persistence.EntityManagerFactory;
+
 import org.jipijapa.core.AbstractStatistics;
+import org.jipijapa.management.spi.EntityManagerFactoryAccess;
+import org.jipijapa.management.spi.PathAddress;
 
 /**
  * HibernateAbstractStatistics
@@ -37,6 +41,17 @@ public abstract class HibernateAbstractStatistics extends AbstractStatistics {
     @Override
     public String getResourceBundleKeyPrefix() {
         return RESOURCE_BUNDLE_KEY_PREFIX;
+    }
+
+    protected EntityManagerFactory getEntityManagerFactory(Object[] args) {
+        PathAddress pathAddress = getPathAddress(args);
+        for(Object arg :args) {
+            if (arg instanceof EntityManagerFactoryAccess) {
+                EntityManagerFactoryAccess entityManagerFactoryAccess = (EntityManagerFactoryAccess)arg;
+                return entityManagerFactoryAccess.entityManagerFactory(pathAddress.getValue(HibernateStatistics.PROVIDER_LABEL));
+            }
+        }
+        return null;
     }
 
 

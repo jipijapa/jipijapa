@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import javax.persistence.EntityManagerFactory;
-
 import org.jipijapa.management.spi.EntityManagerFactoryAccess;
 import org.jipijapa.management.spi.Operation;
 import org.jipijapa.management.spi.PathAddress;
@@ -60,18 +58,8 @@ public abstract class AbstractStatistics implements Statistics {
     }
 
     @Override
-    public void setValue(String name, Object newValue, EntityManagerFactoryAccess entityManagerFactoryAccess, StatisticName statisticName) {
-        operations.get(name).invoke(newValue, entityManagerFactoryAccess, statisticName);
-    }
-
-    protected EntityManagerFactory getEntityManagerFactory(Object[] args) {
-        for(Object arg :args) {
-            if (arg instanceof EntityManagerFactoryAccess) {
-                EntityManagerFactoryAccess entityManagerFactoryAccess = (EntityManagerFactoryAccess)arg;
-                return entityManagerFactoryAccess.entityManagerFactory();
-            }
-        }
-        return null;
+    public void setValue(String name, Object newValue, EntityManagerFactoryAccess entityManagerFactoryAccess, StatisticName statisticName, PathAddress pathAddress) {
+        operations.get(name).invoke(newValue, entityManagerFactoryAccess, statisticName, pathAddress);
     }
 
     protected EntityManagerFactoryAccess getEntityManagerFactoryAccess(Object[] args) {

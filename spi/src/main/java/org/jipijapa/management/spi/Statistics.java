@@ -35,7 +35,7 @@ public interface Statistics {
      */
     Set<String> getNames();
 
-    Collection<String> getDynamicChildrenNames(EntityManagerFactoryAccess entityManagerFactoryAccess);
+    Collection<String> getDynamicChildrenNames(EntityManagerFactoryAccess entityManagerFactoryAccess, PathAddress pathAddress);
 
     /**
      * Get the type
@@ -95,7 +95,7 @@ public interface Statistics {
      * @param name
      * @param newValue
      */
-    void setValue(String name, Object newValue, EntityManagerFactoryAccess entityManagerFactoryAccess, StatisticName statisticName);
+    void setValue(String name, Object newValue, EntityManagerFactoryAccess entityManagerFactoryAccess, StatisticName statisticName, PathAddress pathAddress);
 
     /**
      * get the names of the children statistic levels (if any)

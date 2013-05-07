@@ -28,6 +28,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.jpa.HibernateEntityManagerFactory;
 import org.jipijapa.management.spi.EntityManagerFactoryAccess;
 import org.jipijapa.management.spi.Operation;
+import org.jipijapa.management.spi.PathAddress;
 
 /**
  * Hibernate query cache statistics
@@ -79,9 +80,9 @@ public class HibernateQueryCacheStatistics extends HibernateAbstractStatistics {
    }
 
     @Override
-    public Collection<String> getDynamicChildrenNames(EntityManagerFactoryAccess entityManagerFactoryLookup) {
+    public Collection<String> getDynamicChildrenNames(EntityManagerFactoryAccess entityManagerFactoryLookup, PathAddress pathAddress) {
         Set<String> result = new HashSet<String>();
-        String[] queries = getBaseStatistics(entityManagerFactoryLookup.entityManagerFactory()).getQueries();
+        String[] queries = getBaseStatistics(entityManagerFactoryLookup.entityManagerFactory(pathAddress.getValue(HibernateStatistics.PROVIDER_LABEL))).getQueries();
         if (queries != null) {
             for (String query : queries) {
                 result.add(QueryName.queryName(query).getDisplayName());

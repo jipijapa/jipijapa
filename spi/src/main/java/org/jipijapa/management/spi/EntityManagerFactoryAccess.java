@@ -29,11 +29,6 @@ public interface EntityManagerFactoryAccess {
      * returns the entity manager factory that statistics should be obtained for.
      * @return EntityManagerFactory
      */
-    EntityManagerFactory entityManagerFactory();
+    EntityManagerFactory entityManagerFactory(String scopedPersistenceUnitName);
 
-    /**
-     * return the (application) scoped persistence unit name that the entity manager factory is used with
-     * @return
-     */
-    String getScopedPersistenceUnitName();
 }

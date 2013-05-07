@@ -29,6 +29,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.ejb.HibernateEntityManagerFactory;
 import org.jipijapa.management.spi.EntityManagerFactoryAccess;
 import org.jipijapa.management.spi.Operation;
+import org.jipijapa.management.spi.PathAddress;
 import org.jipijapa.management.spi.Statistics;
 
 /**
@@ -38,7 +39,7 @@ import org.jipijapa.management.spi.Statistics;
  */
 public class HibernateStatistics extends HibernateAbstractStatistics {
 
-    private static final String PROVIDER_LABEL = "hibernate-persistence-unit";
+    public static final String PROVIDER_LABEL = "hibernate-persistence-unit";
     public static final String OPERATION_CLEAR = "clear";
     public static final String OPERATION_EVICTALL = "evict-all";
     public static final String OPERATION_SUMMARY = "summary";
@@ -161,7 +162,7 @@ public class HibernateStatistics extends HibernateAbstractStatistics {
     }
 
     @Override
-    public Collection<String> getDynamicChildrenNames(EntityManagerFactoryAccess entityManagerFactoryLookup) {
+    public Collection<String> getDynamicChildrenNames(EntityManagerFactoryAccess entityManagerFactoryLookup, PathAddress pathAddress) {
 
         return Collections.EMPTY_LIST;
     }
