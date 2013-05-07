@@ -88,7 +88,7 @@ public interface Statistics {
      * @param name The name of the statistics
      * @return The value
      */
-    Object getValue(String name, EntityManagerFactoryAccess entityManagerFactoryAccess, StatisticName statisticName, DynamicName dynamicName);
+    Object getValue(String name, EntityManagerFactoryAccess entityManagerFactoryAccess, StatisticName statisticName, PathAddress pathAddress);
 
     /**
      * Set the value of the statistic (isWriteable must return true)

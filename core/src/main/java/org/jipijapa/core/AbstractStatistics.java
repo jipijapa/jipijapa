@@ -10,9 +10,9 @@ import java.util.Set;
 
 import javax.persistence.EntityManagerFactory;
 
-import org.jipijapa.management.spi.DynamicName;
 import org.jipijapa.management.spi.EntityManagerFactoryAccess;
 import org.jipijapa.management.spi.Operation;
+import org.jipijapa.management.spi.PathAddress;
 import org.jipijapa.management.spi.StatisticName;
 import org.jipijapa.management.spi.Statistics;
 
@@ -55,8 +55,8 @@ public abstract class AbstractStatistics implements Statistics {
     }
 
     @Override
-    public Object getValue(String name, EntityManagerFactoryAccess entityManagerFactoryAccess, StatisticName statisticName, DynamicName dynamicName) {
-        return operations.get(name).invoke(entityManagerFactoryAccess, statisticName, dynamicName);
+    public Object getValue(String name, EntityManagerFactoryAccess entityManagerFactoryAccess, StatisticName statisticName, PathAddress pathAddress) {
+        return operations.get(name).invoke(entityManagerFactoryAccess, statisticName, pathAddress);
     }
 
     @Override
@@ -84,11 +84,10 @@ public abstract class AbstractStatistics implements Statistics {
         return null;
     }
 
-    protected String getDynamicName(Object[] args) {
+    protected PathAddress getPathAddress(Object[] args) {
         for(Object arg :args) {
-            if (arg instanceof DynamicName) {
-                DynamicName name = (DynamicName)arg;
-                return name.getName();
+            if (arg instanceof PathAddress) {
+                return (PathAddress)arg;
             }
         }
         return null;

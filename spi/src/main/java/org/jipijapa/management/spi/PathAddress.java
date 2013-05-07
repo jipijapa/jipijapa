@@ -18,14 +18,16 @@
 package org.jipijapa.management.spi;
 
 /**
- * StatisticName
+ * PathAddress is an ordered set of name/value pairs representing the management path.
+ *
+ * The names are based on the statistic child names (e.g. name=entity value=Employee)
  *
  * @author Scott Marlow
  */
-public interface DynamicName {
-    /**
-     * returns the dynamically generated name
-     * @return
-     */
-    String getName();
+public interface PathAddress {
+
+    int size();
+
+    String getValue(String name);
+    String getValue(int index);
 }
