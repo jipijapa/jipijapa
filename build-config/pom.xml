@@ -21,17 +21,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <parent>
-      <groupId>org.jipijapa</groupId>
-      <artifactId>jipijapa-parent</artifactId>
-      <version>1.0.0.Alpha1-SNAPSHOT</version>
-    </parent>
-
     <groupId>org.jipijapa</groupId>
     <artifactId>build-config</artifactId>
     <name>Build Configuration</name>
-    <version>1.0.0.Alpha1-SNAPSHOT</version>
+    <version>1.0.0.Alpha1</version>
+
+    <description>build configuration for JipiJapa.</description>
+    <url>http://www.jboss.org</url>
 
     <licenses>
         <license>
@@ -40,4 +36,44 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
+    <distributionManagement>
+        <repository>
+            <id>jboss-releases-repository</id>
+            <name>JBoss Releases Repository</name>
+            <url>https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/</url>
+        </repository>
+        <snapshotRepository>
+            <id>jboss-snapshots-repository</id>
+            <name>JBoss Snapshots Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+   </distributionManagement>
+
+   <developers>
+    <!--
+             <developer>
+      <id>[jboss.org username]</id>
+      <name>[developer name]</name>
+      <organization>[developer organization]</organization>
+    </developer>
+    -->
+    <developer>
+      <id>smarlow</id>
+      <name>Scott Marlow</name>
+      <organization>JBoss</organization>
+    </developer>
+  </developers>
+
+  <scm>
+    <url>https://github.com/jipijapa/jipijapa/pom.xml</url>
+    <connection>git://github.com/jipijapa/jipijapa.git</connection>
+    <developerConnection>git://github.com/jipijapa/jipijapa.git</developerConnection>
+  </scm>
+
+  <organization>
+    <name>Red Hat</name>
+    <url>http://www.jboss.org</url>
+   </organization>
+
 </project>

@@ -25,12 +25,12 @@
     <parent>
         <groupId>org.jipijapa</groupId>
         <artifactId>jipijapa-parent</artifactId>
-        <version>1.0.0.Alpha1-SNAPSHOT</version>
+        <version>1.0.0.Alpha1</version>
     </parent>
 
     <groupId>org.jipijapa</groupId>
     <artifactId>eclipselink</artifactId>
-    <version>1.0.0.Alpha1-SNAPSHOT</version>
+    <version>1.0.0.Alpha1</version>
     <name>jipijapa EclipseLink integration</name>
 
     <dependencies>

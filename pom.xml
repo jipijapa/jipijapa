@@ -24,10 +24,19 @@
 
     <groupId>org.jipijapa</groupId>
     <artifactId>jipijapa-parent</artifactId>
-    <version>1.0.0.Alpha1-SNAPSHOT</version>
+    <version>1.0.0.Alpha1</version>
     <packaging>pom</packaging>
-
+    <description>JipiJapa parent POM.</description>
+    <url>http://www.jboss.org</url>
     <name>jipijapa parent</name>
+
+    <licenses>
+        <license>
+            <name>apache2</name>
+            <url>http://repository.jboss.org/licenses/apache-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -78,6 +87,11 @@
         <linkXRef>false</linkXRef>
         <checkstyle.config.location>checkstyle/checkstyle.xml</checkstyle.config.location>
 
+        <!-- **************** -->
+        <!-- Plugins versions -->
+        <!-- **************** -->
+        <version.source.plugin>2.2.1</version.source.plugin>
+
     </properties>
     
     <modules>
@@ -97,7 +111,19 @@
 	        <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
             </plugin>
-	</plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
         <pluginManagement>
             <plugins>
                 <!-- Checkstyle -->
@@ -128,20 +154,52 @@
                         </execution>
                     </executions>
                 </plugin>
-<!--
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <executions>
-                      <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                          <goal>sign</goal>
-                        </goals>
-                      </execution>
-                    </executions>
+
+               <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${version.source.plugin}</version>
+                <configuration>
+                <archive>
+                  <index>true</index>
+                  <manifest>
+                    <addDefaultSpecificationEntries>
+                      true
+                    </addDefaultSpecificationEntries>
+                    <addDefaultImplementationEntries>
+                      true
+                    </addDefaultImplementationEntries>
+                  </manifest>
+                  <manifestEntries>
+                    <Implementation-URL>${project.url}</Implementation-URL>
+                    <Java-Version>${java.version}</Java-Version>
+                    <Java-Vendor>${java.vendor}</Java-Vendor>
+                    <Os-Name>${os.name}</Os-Name>
+                    <Os-Arch>${os.arch}</Os-Arch>
+                    <Os-Version>${os.version}</Os-Version>
+                    <Scm-Url>${project.scm.url}</Scm-Url>
+                    <Scm-Connection>${project.scm.connection}</Scm-Connection>
+                    <Scm-Revision>${buildNumber}</Scm-Revision>
+                    <Build-Timestamp>${build.datetime}</Build-Timestamp>
+                  </manifestEntries>
+                </archive>
+                </configuration>
                 </plugin>
+
+<!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <executions>
+                  <execution>
+                    <id>sign-artifacts</id>
+                    <phase>verify</phase>
+                    <goals>
+                      <goal>sign</goal>
+                    </goals>
+                  </execution>
+                </executions>
+            </plugin>
 -->
             </plugins>
         </pluginManagement>
@@ -296,6 +354,32 @@
     </pluginRepository>
   </pluginRepositories>
         
+  <developers>
+    <!--
+    <developer>
+      <id>[jboss.org username]</id>
+      <name>[developer name]</name>
+      <organization>[developer organization]</organization>
+    </developer>
+    -->
+    <developer>
+      <id>smarlow</id>
+      <name>Scott Marlow</name>
+      <organization>JBoss</organization>
+    </developer>
+  </developers>
+    
+  <scm>
+    <url>https://github.com/jipijapa/jipijapa/pom.xml</url>
+    <connection>git://github.com/jipijapa/jipijapa.git</connection>
+    <developerConnection>git://github.com/jipijapa/jipijapa.git</developerConnection>
+  </scm>
+
+  <organization>
+    <name>Red Hat</name>
+    <url>http://www.jboss.org</url>
+  </organization>
+
 </project>
 
 
