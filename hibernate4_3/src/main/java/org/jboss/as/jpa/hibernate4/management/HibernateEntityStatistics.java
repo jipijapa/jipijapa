@@ -43,6 +43,7 @@ public class HibernateEntityStatistics extends HibernateAbstractStatistics {
     public static final String OPERATION_ENTITY_LOAD_COUNT = "entity-load-count";
     public static final String OPERATION_ENTITY_FETCH_COUNT = "entity-fetch-count";
     public static final String OPERATION_ENTITY_UPDATE_COUNT = "entity-update-count";
+    public static final String OPERATION_OPTIMISTIC_FAILURE_COUNT = "optimistic-failure-count";
 
     public HibernateEntityStatistics() {
         /**
@@ -62,6 +63,9 @@ public class HibernateEntityStatistics extends HibernateAbstractStatistics {
 
         operations.put(OPERATION_ENTITY_UPDATE_COUNT, entityUpdateCount);
         types.put(OPERATION_ENTITY_UPDATE_COUNT, Long.class);
+
+        operations.put(OPERATION_OPTIMISTIC_FAILURE_COUNT, optimisticFailureCount);
+        types.put(OPERATION_OPTIMISTIC_FAILURE_COUNT, Long.class);
     }
 
     private org.hibernate.stat.Statistics getBaseStatistics(EntityManagerFactory entityManagerFactory) {
@@ -116,6 +120,14 @@ public class HibernateEntityStatistics extends HibernateAbstractStatistics {
             return Long.valueOf(getStatistics(getEntityManagerFactory(args), getStatisticName(args)).getUpdateCount());
         }
     };
+
+    private Operation optimisticFailureCount = new Operation() {
+        @Override
+        public Object invoke(Object... args) {
+            return Long.valueOf(getStatistics(getEntityManagerFactory(args), getStatisticName(args)).getOptimisticFailureCount());
+        }
+    };
+
 
     @Override
     public Set<String> getNames() {

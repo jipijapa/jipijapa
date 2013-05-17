@@ -49,6 +49,21 @@ public class HibernateStatistics extends HibernateAbstractStatistics {
     public static final String OPERATION_ENTITY_LOAD_COUNT = "entity-load-count";
     public static final String OPERATION_ENTITY_FETCH_COUNT = "entity-fetch-count";
     public static final String OPERATION_ENTITY_UPDATE_COUNT = "entity-update-count";
+    public static final String OPERATION_COLLECTION_FETCH_COUNT = "collection-fetch-count";
+    public static final String OPERATION_COLLECTION_LOAD_COUNT = "collection-load-count";
+    public static final String OPERATION_COLLECTION_RECREATED_COUNT = "collection-recreated-count";
+    public static final String OPERATION_COLLECTION_REMOVE_COUNT = "collection-remove-count";
+    public static final String OPERATION_COLLECTION_UPDATE_COUNT = "collection-update-count";
+    public static final String OPERATION_QUERYCACHE_HIT_COUNT = "query-cache-hit-count";
+    public static final String OPERATION_QUERYCACHE_MISS_COUNT ="query-cache-miss-count";
+    public static final String OPERATION_QUERYQUERYCACHE_PUT_COUNT ="query-cache-put-count";
+    public static final String OPERATION_QUERYEXECUTION_COUNT ="query-execution-count";
+    public static final String OPERATION_QUERYEXECUTION_MAX_TIME ="query-execution-max-time";
+    public static final String OPERATION_QUERYEXECUTION_MAX_TIME_STRING ="query-execution-max-time-query-string";
+    public static final String OPERATION_SECONDLEVELCACHE_HIT_COUNT= "second-level-cache-hit-count";
+    public static final String OPERATION_SECONDLEVELCACHE_MISS_COUNT="second-level-cache-miss-count";
+    public static final String OPERATION_SECONDLEVELCACHE_PUT_COUNT="second-level-cache-put-count";
+
     public static final String OPERATION_FLUSH_COUNT = "flush-count";
     public static final String OPERATION_CONNECT_COUNT = "connect-count";
     public static final String OPERATION_SESSION_CLOSE_COUNT = "session-close-count";
@@ -62,8 +77,6 @@ public class HibernateStatistics extends HibernateAbstractStatistics {
     public static final String COLLECTION = "collection";
     public static final String ENTITY = "entity";
     public static final String QUERYCACHE = "query-cache";
-
-
 
     private final Map<String, Statistics> childrenStatistics = new HashMap<String,Statistics>();
     public HibernateStatistics() {
@@ -89,6 +102,39 @@ public class HibernateStatistics extends HibernateAbstractStatistics {
 
         operations.put(OPERATION_ENTITY_DELETE_COUNT, entityDeleteCount);
         types.put(OPERATION_ENTITY_DELETE_COUNT, Long.class);
+
+        operations.put(OPERATION_COLLECTION_FETCH_COUNT, collectionFetchCount);
+        types.put(OPERATION_COLLECTION_FETCH_COUNT, Long.class);
+
+        operations.put(OPERATION_COLLECTION_LOAD_COUNT, collectionLoadCount);
+        types.put(OPERATION_COLLECTION_LOAD_COUNT, Long.class);
+
+        operations.put(OPERATION_COLLECTION_RECREATED_COUNT, collectionRecreatedCount);
+        types.put(OPERATION_COLLECTION_RECREATED_COUNT, Long.class);
+
+        operations.put(OPERATION_COLLECTION_REMOVE_COUNT, collectionRemoveCount);
+        types.put(OPERATION_COLLECTION_REMOVE_COUNT, Long.class);
+
+        operations.put(OPERATION_COLLECTION_UPDATE_COUNT, collectionUpdateCount);
+        types.put(OPERATION_COLLECTION_UPDATE_COUNT, Long.class);
+
+        operations.put(OPERATION_QUERYCACHE_HIT_COUNT, queryCacheHitCount);
+        types.put(OPERATION_QUERYCACHE_HIT_COUNT, Long.class);
+
+        operations.put(OPERATION_QUERYCACHE_MISS_COUNT, queryCacheMissCount);
+        types.put(OPERATION_QUERYCACHE_MISS_COUNT, Long.class);
+
+        operations.put(OPERATION_QUERYQUERYCACHE_PUT_COUNT, queryCachePutCount);
+        types.put(OPERATION_QUERYQUERYCACHE_PUT_COUNT, Long.class);
+
+        operations.put(OPERATION_QUERYEXECUTION_COUNT, queryExecutionCount);
+        types.put(OPERATION_QUERYEXECUTION_COUNT, Long.class);
+
+        operations.put(OPERATION_QUERYEXECUTION_MAX_TIME, queryExecutionMaxTime);
+        types.put(OPERATION_QUERYEXECUTION_MAX_TIME, Long.class);
+
+        operations.put(OPERATION_QUERYEXECUTION_MAX_TIME_STRING, queryExecutionMaxTimeString);
+        types.put(OPERATION_QUERYEXECUTION_MAX_TIME_STRING, String.class);
 
         operations.put(OPERATION_ENTITY_INSERT_COUNT, entityInsertCount);
         types.put(OPERATION_ENTITY_INSERT_COUNT, Long.class);
@@ -128,6 +174,15 @@ public class HibernateStatistics extends HibernateAbstractStatistics {
 
         operations.put(OPERATION_OPTIMISTIC_FAILURE_COUNT, optimisticFailureCount);
         types.put(OPERATION_OPTIMISTIC_FAILURE_COUNT, Long.class);
+
+        operations.put(OPERATION_SECONDLEVELCACHE_HIT_COUNT, secondLevelCacheHitCount);
+        types.put(OPERATION_SECONDLEVELCACHE_HIT_COUNT, Long.class);
+
+        operations.put(OPERATION_SECONDLEVELCACHE_MISS_COUNT, secondLevelCacheMissCount);
+        types.put(OPERATION_SECONDLEVELCACHE_MISS_COUNT, Long.class);
+
+        operations.put(OPERATION_SECONDLEVELCACHE_PUT_COUNT, secondLevelCachePutCount);
+        types.put(OPERATION_SECONDLEVELCACHE_PUT_COUNT, Long.class);
 
         /**
          * Specify the children statistics
@@ -178,7 +233,11 @@ public class HibernateStatistics extends HibernateAbstractStatistics {
     private Operation label = new Operation() {
         @Override
         public Object invoke(Object... args) {
-            return getEntityManagerFactory(args).getProperties().get("puname");
+            PathAddress pathAddress = getPathAddress(args);
+            if (pathAddress != null) {
+                return pathAddress.getValue(PROVIDER_LABEL);
+            }
+            return "";
         }
     };
 
@@ -216,6 +275,78 @@ public class HibernateStatistics extends HibernateAbstractStatistics {
         @Override
         public Object invoke(Object... args) {
             return Long.valueOf(getStatistics(getEntityManagerFactory(args)).getEntityDeleteCount());
+        }
+    };
+
+    private Operation collectionLoadCount = new Operation() {
+        @Override
+        public Object invoke(Object... args) {
+            return Long.valueOf(getStatistics(getEntityManagerFactory(args)).getCollectionLoadCount());
+        }
+    };
+
+    private Operation collectionFetchCount = new Operation() {
+        @Override
+        public Object invoke(Object... args) {
+            return Long.valueOf(getStatistics(getEntityManagerFactory(args)).getCollectionFetchCount());
+        }
+    };
+
+    private Operation collectionRecreatedCount = new Operation() {
+        @Override
+        public Object invoke(Object... args) {
+            return Long.valueOf(getStatistics(getEntityManagerFactory(args)).getCollectionRecreateCount());
+        }
+    };
+
+    private Operation collectionRemoveCount = new Operation() {
+        @Override
+        public Object invoke(Object... args) {
+            return Long.valueOf(getStatistics(getEntityManagerFactory(args)).getCollectionRemoveCount());
+        }
+    };
+
+    private Operation collectionUpdateCount = new Operation() {
+        @Override
+        public Object invoke(Object... args) {
+            return Long.valueOf(getStatistics(getEntityManagerFactory(args)).getCollectionUpdateCount());
+        }
+    };
+
+    private Operation queryCacheHitCount = new Operation() {
+        @Override
+        public Object invoke(Object... args) {
+            return Long.valueOf(getStatistics(getEntityManagerFactory(args)).getQueryCacheHitCount());
+        }
+    };
+    private Operation queryCacheMissCount = new Operation() {
+        @Override
+        public Object invoke(Object... args) {
+            return Long.valueOf(getStatistics(getEntityManagerFactory(args)).getQueryCacheMissCount());
+        }
+    };
+    private Operation queryCachePutCount = new Operation() {
+        @Override
+        public Object invoke(Object... args) {
+            return Long.valueOf(getStatistics(getEntityManagerFactory(args)).getQueryCachePutCount());
+        }
+    };
+    private Operation queryExecutionCount = new Operation() {
+        @Override
+        public Object invoke(Object... args) {
+            return Long.valueOf(getStatistics(getEntityManagerFactory(args)).getQueryExecutionCount());
+        }
+    };
+    private Operation queryExecutionMaxTime = new Operation() {
+        @Override
+        public Object invoke(Object... args) {
+            return Long.valueOf(getStatistics(getEntityManagerFactory(args)).getQueryExecutionMaxTime());
+        }
+    };
+    private Operation queryExecutionMaxTimeString = new Operation() {
+        @Override
+        public Object invoke(Object... args) {
+            return String.valueOf(getStatistics(getEntityManagerFactory(args)).getQueryExecutionMaxTimeQueryString());
         }
     };
 
@@ -307,6 +438,27 @@ public class HibernateStatistics extends HibernateAbstractStatistics {
         @Override
         public Object invoke(Object... args) {
             return Long.valueOf(getStatistics(getEntityManagerFactory(args)).getOptimisticFailureCount());
+        }
+    };
+
+    private Operation secondLevelCacheHitCount = new Operation() {
+        @Override
+        public Object invoke(Object... args) {
+            return Long.valueOf(getStatistics(getEntityManagerFactory(args)).getSecondLevelCacheHitCount());
+        }
+    };
+
+    private Operation secondLevelCacheMissCount = new Operation() {
+        @Override
+        public Object invoke(Object... args) {
+            return Long.valueOf(getStatistics(getEntityManagerFactory(args)).getSecondLevelCacheMissCount());
+        }
+    };
+
+    private Operation secondLevelCachePutCount = new Operation() {
+        @Override
+        public Object invoke(Object... args) {
+            return Long.valueOf(getStatistics(getEntityManagerFactory(args)).getSecondLevelCachePutCount());
         }
     };
 
