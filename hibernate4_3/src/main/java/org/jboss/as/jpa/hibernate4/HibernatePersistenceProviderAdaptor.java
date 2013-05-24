@@ -24,7 +24,7 @@ import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 import org.jboss.as.jpa.hibernate4.management.HibernateManagementAdaptor;
 import org.jipijapa.cache.spi.Classification;
-import org.jipijapa.core.internal.Notification;
+import org.jipijapa.event.impl.internal.Notification;
 import org.jipijapa.plugin.spi.JtaManager;
 import org.jipijapa.plugin.spi.ManagementAdaptor;
 import org.jipijapa.plugin.spi.PersistenceProviderAdaptor;
@@ -37,11 +37,18 @@ import org.jipijapa.plugin.spi.PersistenceUnitMetadata;
  */
 public class HibernatePersistenceProviderAdaptor implements PersistenceProviderAdaptor {
 
-    private volatile JBossAppServerJtaPlatform appServerJtaPlatform;
-
     @Override
     public void injectJtaManager(JtaManager jtaManager) {
-        appServerJtaPlatform = new JBossAppServerJtaPlatform(jtaManager);
+        // specify JTA integration to use with Hibernate
+        if (DefaultJtaPlatform.getDelegate() == null ||
+                DefaultJtaPlatform.getDelegate().getJtaManager() != jtaManager) {
+            synchronized (DefaultJtaPlatform.class) {
+                if (DefaultJtaPlatform.getDelegate() == null ||
+                    DefaultJtaPlatform.getDelegate().getJtaManager() != jtaManager) {
+                    DefaultJtaPlatform.setDelegate(new JBossAppServerJtaPlatform(jtaManager));
+                }
+            }
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -50,7 +57,6 @@ public class HibernatePersistenceProviderAdaptor implements PersistenceProviderA
         putPropertyIfAbsent(pu, properties, Configuration.USE_NEW_ID_GENERATOR_MAPPINGS, "true");
         putPropertyIfAbsent(pu, properties, org.hibernate.ejb.AvailableSettings.SCANNER, HibernateArchiveScanner.class.getName());
         properties.put(AvailableSettings.APP_CLASSLOADER, pu.getClassLoader());
-        putPropertyIfAbsent(pu, properties, AvailableSettings.JTA_PLATFORM, appServerJtaPlatform);
         putPropertyIfAbsent(pu,properties, org.hibernate.ejb.AvailableSettings.ENTITY_MANAGER_FACTORY_NAME, pu.getScopedPersistenceUnitName());
         putPropertyIfAbsent(pu, properties, AvailableSettings.SESSION_FACTORY_NAME, pu.getScopedPersistenceUnitName());
         if (!pu.getProperties().containsKey(AvailableSettings.SESSION_FACTORY_NAME)) {

@@ -96,7 +96,6 @@
     
     <modules>
         <module>spi</module>
-        <module>core</module>
         <module>hibernate4_1</module>
         <module>hibernate4_3</module>
         <module>hibernate3</module>
@@ -232,13 +231,6 @@
                 <artifactId>jpa</artifactId>
                 <version>${project.version}</version>
             	<scope>provided</scope>
-            </dependency>
-
-	    <dependency>
-                <groupId>org.jipijapa</groupId>
-                <artifactId>core</artifactId>
-                <version>${project.version}</version>
-                <scope>provided</scope>
             </dependency>
 
             <dependency>

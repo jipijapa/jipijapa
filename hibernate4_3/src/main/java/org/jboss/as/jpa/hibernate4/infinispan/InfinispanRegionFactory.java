@@ -30,7 +30,7 @@ import org.infinispan.manager.EmbeddedCacheManager;
 import org.jboss.as.jpa.hibernate4.HibernateSecondLevelCache;
 import org.jipijapa.cache.spi.Classification;
 import org.jipijapa.cache.spi.Wrapper;
-import org.jipijapa.core.internal.Notification;
+import org.jipijapa.event.impl.internal.Notification;
 
 /**
  * Infinispan-backed region factory for use with standalone (i.e. non-JPA) Hibernate applications.
