@@ -44,8 +44,8 @@ import org.jboss.vfs.VFS;
 import org.jboss.vfs.VirtualFile;
 import org.jipijapa.plugin.spi.PersistenceUnitMetadata;
 
-import static org.jipijapa.core.JpaLogger.JPA_LOGGER;
-import static org.jipijapa.core.JpaMessages.MESSAGES;
+import static org.jboss.as.jpa.hibernate3.JpaLogger.JPA_LOGGER;
+import static org.jboss.as.jpa.hibernate3.JpaMessages.MESSAGES;
 
 /**
  * Annotation scanner for Hibernate

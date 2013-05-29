@@ -32,6 +32,11 @@ import org.jipijapa.plugin.spi.JtaManager;
 public class JBossAppServerJtaPlatform extends  org.hibernate.engine.transaction.jta.platform.internal.JBossAppServerJtaPlatform {
 
     private final JtaSynchronizationStrategy synchronizationStrategy;
+
+    protected JtaManager getJtaManager() {
+        return jtaManager;
+    }
+
     private final JtaManager jtaManager;
 
     public JBossAppServerJtaPlatform(final JtaManager jtaManager) {

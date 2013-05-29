@@ -23,7 +23,7 @@ import org.hibernate.cfg.AvailableSettings;
 import org.jboss.as.jpa.hibernate4.infinispan.InfinispanRegionFactory;
 import org.jboss.as.jpa.hibernate4.infinispan.SharedInfinispanRegionFactory;
 import org.jipijapa.cache.spi.Classification;
-import org.jipijapa.core.internal.Notification;
+import org.jipijapa.event.impl.internal.Notification;
 
 /**
  * Second level cache setup.

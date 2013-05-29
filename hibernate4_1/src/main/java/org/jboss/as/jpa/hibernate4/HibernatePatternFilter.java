@@ -17,7 +17,7 @@
 
 package org.jboss.as.jpa.hibernate4;
 
-import static org.jipijapa.core.JpaMessages.MESSAGES;
+import static org.jboss.as.jpa.hibernate4.JpaMessages.MESSAGES;
 
 import org.jboss.vfs.VirtualFile;
 import org.jboss.vfs.VirtualFileFilter;
