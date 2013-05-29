@@ -29,7 +29,7 @@
     </parent>
 
     <groupId>org.jipijapa</groupId>
-    <artifactId>hibernate3</artifactId>
+    <artifactId>jipijapa-hibernate3</artifactId>
     <version>1.0.0.Alpha2-SNAPSHOT</version>
     <name>jipijapa Hibernate 3.6.x integration</name>
 
@@ -75,7 +75,7 @@
 
         <dependency>
             <groupId>org.jipijapa</groupId>
-            <artifactId>spi</artifactId>
+            <artifactId>jipijapa-spi</artifactId>
             <scope>provided</scope>
         </dependency>
 

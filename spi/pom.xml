@@ -29,7 +29,7 @@
     </parent>
 
     <groupId>org.jipijapa</groupId>
-    <artifactId>spi</artifactId>
+    <artifactId>jipijapa-spi</artifactId>
     <version>1.0.0.Alpha2-SNAPSHOT</version>
 
     <name>jipijapa SPI</name>
