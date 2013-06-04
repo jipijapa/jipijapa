@@ -25,12 +25,12 @@
     <parent>
         <groupId>org.jipijapa</groupId>
         <artifactId>jipijapa-parent</artifactId>
-        <version>1.0.0.Alpha2</version>
+        <version>1.0.0.Alpha3-SNAPSHOT</version>
     </parent>
 
     <groupId>org.jipijapa</groupId>
     <artifactId>jipijapa-openjpa</artifactId>
-    <version>1.0.0.Alpha2</version>
+    <version>1.0.0.Alpha3-SNAPSHOT</version>
     
     <name>jipijapa OpenJPA integration</name>
 
