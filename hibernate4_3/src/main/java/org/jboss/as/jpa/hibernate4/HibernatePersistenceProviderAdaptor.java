@@ -20,22 +20,27 @@ package org.jboss.as.jpa.hibernate4;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.persistence.spi.PersistenceUnitInfo;
+
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 import org.jboss.as.jpa.hibernate4.management.HibernateManagementAdaptor;
+import org.jboss.as.jpa.hibernate4.management.TwoPhaseBootstrapImpl;
 import org.jipijapa.cache.spi.Classification;
 import org.jipijapa.event.impl.internal.Notification;
+import org.jipijapa.plugin.spi.EntityManagerFactoryBuilder;
 import org.jipijapa.plugin.spi.JtaManager;
 import org.jipijapa.plugin.spi.ManagementAdaptor;
 import org.jipijapa.plugin.spi.PersistenceProviderAdaptor;
 import org.jipijapa.plugin.spi.PersistenceUnitMetadata;
+import org.jipijapa.plugin.spi.TwoPhaseBootstrapCapable;
 
 /**
  * Implements the PersistenceProviderAdaptor for Hibernate
  *
  * @author Scott Marlow
  */
-public class HibernatePersistenceProviderAdaptor implements PersistenceProviderAdaptor {
+public class HibernatePersistenceProviderAdaptor implements PersistenceProviderAdaptor, TwoPhaseBootstrapCapable {
 
     @Override
     public void injectJtaManager(JtaManager jtaManager) {
@@ -111,5 +116,13 @@ public class HibernatePersistenceProviderAdaptor implements PersistenceProviderA
     public void cleanup(PersistenceUnitMetadata pu) {
 
     }
+
+    /* start of TwoPhaseBootstrapCapable methods */
+
+    public EntityManagerFactoryBuilder getBootstrap(final PersistenceUnitInfo info, final Map map) {
+        return new TwoPhaseBootstrapImpl(info, map);
+    }
+
+    /* end of TwoPhaseBootstrapCapable methods */
 }
 
