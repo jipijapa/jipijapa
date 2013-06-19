@@ -69,11 +69,7 @@ public class EclipseLinkPersistenceProviderAdaptor implements
     @Override
     public void addProviderProperties(Map properties, PersistenceUnitMetadata pu) {
         if (!properties.containsKey(ECLIPSELINK_TARGET_SERVER)) {
-            if (hasJTABug) {
-                properties.put(ECLIPSELINK_TARGET_SERVER, JBossAS7ServerPlatform.class.getName());
-            } else {
-                properties.put(ECLIPSELINK_TARGET_SERVER, "JBoss");
-            }
+            properties.put(ECLIPSELINK_TARGET_SERVER, JBossAS7ServerPlatform.class.getName());
             properties.put(ECLIPSELINK_ARCHIVE_FACTORY, JBossArchiveFactoryImpl.class.getName());
             properties.put(ECLIPSELINK_LOGGING_LOGGER, JBossLogger.class.getName());
         }
