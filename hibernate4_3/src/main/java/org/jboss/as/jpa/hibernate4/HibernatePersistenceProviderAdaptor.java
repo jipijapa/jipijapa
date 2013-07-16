@@ -42,8 +42,18 @@ import org.jipijapa.plugin.spi.TwoPhaseBootstrapCapable;
  */
 public class HibernatePersistenceProviderAdaptor implements PersistenceProviderAdaptor, TwoPhaseBootstrapCapable {
 
+    private volatile JtaManager jtaManager;
+
     @Override
     public void injectJtaManager(JtaManager jtaManager) {
+        if (this.jtaManager != jtaManager) {
+            this.jtaManager = jtaManager;
+        }
+
+        // TODO: resolve http://lists.jboss.org/pipermail/hibernate-dev/2013-July/010140.html which seems to be a
+        // Hibernate service loader related leak and uncomment the following)
+        // also remove the appServerJtaPlatform and stop setting AvailableSettings.JTA_PLATFORM
+/*
         // specify JTA integration to use with Hibernate
         if (DefaultJtaPlatform.getDelegate() == null ||
                 DefaultJtaPlatform.getDelegate().getJtaManager() != jtaManager) {
@@ -54,6 +64,7 @@ public class HibernatePersistenceProviderAdaptor implements PersistenceProviderA
                 }
             }
         }
+*/
     }
 
     @SuppressWarnings("deprecation")
@@ -62,6 +73,7 @@ public class HibernatePersistenceProviderAdaptor implements PersistenceProviderA
         putPropertyIfAbsent(pu, properties, Configuration.USE_NEW_ID_GENERATOR_MAPPINGS, "true");
         putPropertyIfAbsent(pu, properties, org.hibernate.ejb.AvailableSettings.SCANNER, HibernateArchiveScanner.class.getName());
         properties.put(AvailableSettings.APP_CLASSLOADER, pu.getClassLoader());
+        putPropertyIfAbsent(pu, properties, AvailableSettings.JTA_PLATFORM,  new JBossAppServerJtaPlatform(jtaManager));
         putPropertyIfAbsent(pu,properties, org.hibernate.ejb.AvailableSettings.ENTITY_MANAGER_FACTORY_NAME, pu.getScopedPersistenceUnitName());
         putPropertyIfAbsent(pu, properties, AvailableSettings.SESSION_FACTORY_NAME, pu.getScopedPersistenceUnitName());
         if (!pu.getProperties().containsKey(AvailableSettings.SESSION_FACTORY_NAME)) {
