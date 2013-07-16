@@ -11,3 +11,5 @@ hibernate3  -
 openjpa - 
 eclipselink - 
 spi - 
+
+Use https://issues.jboss.org/browse/JIPI for bug reporting.
