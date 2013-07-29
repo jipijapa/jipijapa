@@ -76,19 +76,6 @@ public class HibernateSecondLevelCache {
                 cacheSettings.put(TIMESTAMPS, mutableProperties.getProperty(InfinispanRegionFactory.TIMESTAMPS_CACHE_RESOURCE_PROP, InfinispanRegionFactory.DEF_QUERY_RESOURCE));
             }
             Notification.addCacheDependencies(Classification.INFINISPAN, cacheSettings);
-            // TODO: remove the code below
-            String entity = mutableProperties.getProperty(InfinispanRegionFactory.ENTITY_CACHE_RESOURCE_PROP, InfinispanRegionFactory.DEF_ENTITY_RESOURCE);
-            String collection = mutableProperties.getProperty(InfinispanRegionFactory.COLLECTION_CACHE_RESOURCE_PROP, InfinispanRegionFactory.DEF_ENTITY_RESOURCE);
-            //builder.addDependency(DependencyType.OPTIONAL, ChannelService.getServiceName(container));
-            //builder.addDependency(CacheConfigurationService.getServiceName(container, entity));
-            //builder.addDependency(CacheConfigurationService.getServiceName(container, collection));
-            if (Boolean.parseBoolean(mutableProperties.getProperty(AvailableSettings.USE_QUERY_CACHE))) {
-                String query = mutableProperties.getProperty(InfinispanRegionFactory.QUERY_CACHE_RESOURCE_PROP, InfinispanRegionFactory.DEF_QUERY_RESOURCE);
-                String timestamps = mutableProperties.getProperty(InfinispanRegionFactory.TIMESTAMPS_CACHE_RESOURCE_PROP, InfinispanRegionFactory.DEF_QUERY_RESOURCE);
-                //builder.addDependency(CacheConfigurationService.getServiceName(container, timestamps));
-                //builder.addDependency(CacheConfigurationService.getServiceName(container, query));
-            }
-
         }
     }
 }

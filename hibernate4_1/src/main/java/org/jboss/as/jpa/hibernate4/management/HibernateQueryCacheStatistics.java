@@ -117,61 +117,67 @@ public class HibernateQueryCacheStatistics extends HibernateAbstractStatistics {
         return null;
     }
 
-
-
     private Operation queryExecutionCount = new Operation() {
         @Override
         public Object invoke(Object... args) {
-            return Long.valueOf(getStatistics(getEntityManagerFactory(args), getStatisticName(args)).getExecutionCount());
+            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getStatisticName(args));
+            return Long.valueOf(statistics != null ? statistics.getExecutionCount() : 0);
         }
     };
 
     private Operation queryExecutionMaximumTime = new Operation() {
         @Override
         public Object invoke(Object... args) {
-            return Long.valueOf(getStatistics(getEntityManagerFactory(args), getStatisticName(args)).getExecutionMaxTime());
+            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getStatisticName(args));
+            return Long.valueOf(statistics != null ? statistics.getExecutionMaxTime() : 0);
         }
     };
 
     private Operation queryExecutionRowCount = new Operation() {
         @Override
         public Object invoke(Object... args) {
-            return Long.valueOf(getStatistics(getEntityManagerFactory(args), getStatisticName(args)).getExecutionRowCount());
+            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getStatisticName(args));
+            return Long.valueOf(statistics != null ? statistics.getExecutionRowCount() : 0);
         }
     };
 
     private Operation queryExecutionAverageTime = new Operation() {
         @Override
         public Object invoke(Object... args) {
-            return Long.valueOf(getStatistics(getEntityManagerFactory(args), getStatisticName(args)).getExecutionAvgTime());
+            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getStatisticName(args));
+            return Long.valueOf(statistics != null ? statistics.getExecutionAvgTime() : 0);
         }
     };
 
     private Operation queryExecutionMinimumTime = new Operation() {
         @Override
         public Object invoke(Object... args) {
-            return Long.valueOf(getStatistics(getEntityManagerFactory(args), getStatisticName(args)).getExecutionMinTime());
+            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getStatisticName(args));
+            return Long.valueOf(statistics != null ? statistics.getExecutionMinTime() : 0);
         }
     };
 
     private Operation queryCacheHitCount = new Operation() {
         @Override
         public Object invoke(Object... args) {
-            return Long.valueOf(getStatistics(getEntityManagerFactory(args), getStatisticName(args)).getCacheHitCount());
+            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getStatisticName(args));
+            return Long.valueOf(statistics != null ? statistics.getCacheHitCount() : 0);
         }
     };
 
     private Operation queryCacheMissCount = new Operation() {
         @Override
         public Object invoke(Object... args) {
-            return Long.valueOf(getStatistics(getEntityManagerFactory(args), getStatisticName(args)).getCacheMissCount());
+            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getStatisticName(args));
+            return Long.valueOf(statistics != null ? statistics.getCacheMissCount() : 0);
         }
     };
 
     private Operation queryCachePutCount = new Operation() {
         @Override
         public Object invoke(Object... args) {
-            return Long.valueOf(getStatistics(getEntityManagerFactory(args), getStatisticName(args)).getCachePutCount());
+            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getStatisticName(args));
+            return Long.valueOf(statistics != null ? statistics.getCachePutCount() : 0);
         }
     };
 
