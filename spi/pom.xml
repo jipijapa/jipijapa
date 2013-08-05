@@ -25,12 +25,12 @@
     <parent>
         <groupId>org.jipijapa</groupId>
         <artifactId>jipijapa-parent</artifactId>
-        <version>1.0.0.Alpha5-SNAPSHOT</version>
+        <version>1.0.0.Alpha6-SNAPSHOT</version>
     </parent>
 
     <groupId>org.jipijapa</groupId>
     <artifactId>jipijapa-spi</artifactId>
-    <version>1.0.0.Alpha5-SNAPSHOT</version>
+    <version>1.0.0.Alpha6-SNAPSHOT</version>
 
     <name>jipijapa SPI</name>
 
