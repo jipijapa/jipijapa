@@ -39,4 +39,15 @@ public interface EntityManagerFactoryBuilder {
      * something having gone wrong during the bootstrap process
      */
     void cancel();
+
+    /**
+     * Allows passing in a Java EE ValidatorFactory (delayed from constructing the builder, AKA phase 2) to be used
+     * in building the EntityManagerFactory
+     *
+     * @param validatorFactory The ValidatorFactory
+     *
+     * @return {@code this}, for method chaining
+     */
+    EntityManagerFactoryBuilder withValidatorFactory(Object validatorFactory);
+
 }

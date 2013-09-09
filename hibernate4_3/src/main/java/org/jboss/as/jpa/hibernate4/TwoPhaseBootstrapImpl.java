@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.jboss.as.jpa.hibernate4.management;
+package org.jboss.as.jpa.hibernate4;
 
 import java.util.Map;
 
@@ -47,6 +47,12 @@ public class TwoPhaseBootstrapImpl implements EntityManagerFactoryBuilder {
     @Override
     public void cancel() {
         entityManagerFactoryBuilder.cancel();
+    }
+
+    @Override
+    public EntityManagerFactoryBuilder withValidatorFactory(Object validatorFactory) {
+        entityManagerFactoryBuilder.withValidatorFactory(validatorFactory);
+        return this;
     }
 
 }

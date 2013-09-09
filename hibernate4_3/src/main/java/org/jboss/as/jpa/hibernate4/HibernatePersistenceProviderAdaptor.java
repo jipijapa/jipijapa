@@ -25,7 +25,6 @@ import javax.persistence.spi.PersistenceUnitInfo;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 import org.jboss.as.jpa.hibernate4.management.HibernateManagementAdaptor;
-import org.jboss.as.jpa.hibernate4.management.TwoPhaseBootstrapImpl;
 import org.jipijapa.cache.spi.Classification;
 import org.jipijapa.event.impl.internal.Notification;
 import org.jipijapa.plugin.spi.EntityManagerFactoryBuilder;
