@@ -262,13 +262,13 @@ public class HibernateStatistics extends HibernateAbstractStatistics {
     private Operation statisticsEnabled = new Operation() {
         @Override
         public Object invoke(Object... args) {
-            if (args.length > 0 && args[0] instanceof Boolean) {
-                Boolean newValue = (Boolean) args[0];
-                org.hibernate.stat.Statistics statistics = getStatistics(getEntityManagerFactory(args));
-                if (statistics != null) {
+            org.hibernate.stat.Statistics statistics = getStatistics(getEntityManagerFactory(args));
+            if (statistics != null) {
+                if (args.length > 0 && args[0] instanceof Boolean) {
+                    Boolean newValue = (Boolean) args[0];
                     statistics.setStatisticsEnabled(newValue.booleanValue());
-                    return Boolean.valueOf(statistics.isStatisticsEnabled());
                 }
+            return Boolean.valueOf(statistics.isStatisticsEnabled());
             }
          return null;
         }
