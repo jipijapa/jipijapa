@@ -17,8 +17,12 @@
 
 package org.jboss.as.jpa.hibernate4;
 
+import static org.jboss.as.jpa.hibernate4.JpaLogger.JPA_LOGGER;
+
 import java.util.Map;
 import java.util.Properties;
+
+import javax.persistence.SharedCacheMode;
 
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
@@ -36,6 +40,8 @@ import org.jipijapa.plugin.spi.PersistenceUnitMetadata;
 public class HibernatePersistenceProviderAdaptor implements PersistenceProviderAdaptor {
 
     private volatile JBossAppServerJtaPlatform appServerJtaPlatform;
+    private static final String SHARED_CACHE_MODE = "javax.persistence.sharedCache.mode";
+    private static final String NONE = SharedCacheMode.NONE.name();
 
     @Override
     public void injectJtaManager(JtaManager jtaManager) {
@@ -59,9 +65,28 @@ public class HibernatePersistenceProviderAdaptor implements PersistenceProviderA
 
     @Override
     public void addProviderDependencies(PersistenceUnitMetadata pu) {
-        Properties properties = pu.getProperties();
-        if (Boolean.parseBoolean(properties.getProperty(AvailableSettings.USE_SECOND_LEVEL_CACHE))) {
+        final Properties properties = pu.getProperties();
+        final String sharedCacheMode = properties.getProperty(SHARED_CACHE_MODE);
+
+        // check if 2lc is explicitly disabled which takes precedence over other settings
+        boolean sharedCacheDisabled = SharedCacheMode.NONE.equals(pu.getSharedCacheMode())
+                ||
+                NONE.equals(sharedCacheMode);
+
+        if ( ! sharedCacheDisabled &&
+                Boolean.parseBoolean(properties.getProperty(AvailableSettings.USE_SECOND_LEVEL_CACHE))
+                ||
+                ( sharedCacheMode != null && (! NONE.equals(sharedCacheMode) ) )
+                || (! SharedCacheMode.NONE.equals(pu.getSharedCacheMode()))) {
             HibernateSecondLevelCache.addSecondLevelCacheDependencies(pu.getProperties(), pu.getScopedPersistenceUnitName());
+            JPA_LOGGER.tracef("second level cache enabled for %s", pu.getScopedPersistenceUnitName());
+        }
+        else {
+            JPA_LOGGER.tracef("second level cache disabled for %s, pu %s property = %s, pu.getSharedCacheMode = %s",
+                    pu.getScopedPersistenceUnitName(),
+                    SHARED_CACHE_MODE,
+                    sharedCacheMode,
+                    pu.getSharedCacheMode().toString());
         }
     }
 
