@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public enum Classification {
     INFINISPAN("Infinispan"),
-    UNKNOWN(null);
+    NONE(null);
 
     private final String name;
 
@@ -57,7 +57,7 @@ public enum Classification {
 
     public static Classification forName(String localName) {
         final Classification element = MAP.get(localName);
-        return element == null ? UNKNOWN : element;
+        return element == null ? NONE : element;
     }
 
 }

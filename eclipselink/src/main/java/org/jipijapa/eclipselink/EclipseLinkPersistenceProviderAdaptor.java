@@ -24,6 +24,7 @@ import org.jipijapa.plugin.spi.JtaManager;
 import org.jipijapa.plugin.spi.ManagementAdaptor;
 import org.jipijapa.plugin.spi.PersistenceProviderAdaptor;
 import org.jipijapa.plugin.spi.PersistenceUnitMetadata;
+import org.jipijapa.plugin.spi.Platform;
 
 public class EclipseLinkPersistenceProviderAdaptor implements
         PersistenceProviderAdaptor {
@@ -81,6 +82,11 @@ public class EclipseLinkPersistenceProviderAdaptor implements
     @Override
     public void injectJtaManager(JtaManager jtaManager) {
         // No action required, EclipseLink looks this up from JNDI
+    }
+
+    @Override
+    public void injectPlatform(Platform platform) {
+
     }
 
     @Override

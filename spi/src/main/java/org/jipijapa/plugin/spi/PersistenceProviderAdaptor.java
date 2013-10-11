@@ -34,6 +34,12 @@ public interface PersistenceProviderAdaptor {
     void injectJtaManager(JtaManager jtaManager);
 
     /**
+     * pass the platform in use
+     * @param platform
+     */
+    void injectPlatform(Platform platform);
+
+    /**
      * Adds any provider specific properties (e.g. hibernate.transaction.manager_lookup_class)
      *
      * @param properties

@@ -26,6 +26,7 @@ import org.jipijapa.plugin.spi.JtaManager;
 import org.jipijapa.plugin.spi.ManagementAdaptor;
 import org.jipijapa.plugin.spi.PersistenceProviderAdaptor;
 import org.jipijapa.plugin.spi.PersistenceUnitMetadata;
+import org.jipijapa.plugin.spi.Platform;
 
 /**
  * Implements the PersistenceProviderAdaptor for Hibernate 3.3.x or higher 3.x
@@ -40,6 +41,11 @@ public class HibernatePersistenceProviderAdaptor implements PersistenceProviderA
     @Override
     public void injectJtaManager(JtaManager jtaManager) {
         JBossAppServerJtaPlatform.initJBossAppServerJtaPlatform(jtaManager);
+    }
+
+    @Override
+    public void injectPlatform(Platform platform) {
+
     }
 
     @Override

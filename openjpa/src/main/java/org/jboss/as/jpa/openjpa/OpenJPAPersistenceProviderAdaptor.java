@@ -23,6 +23,7 @@ import org.jipijapa.plugin.spi.JtaManager;
 import org.jipijapa.plugin.spi.ManagementAdaptor;
 import org.jipijapa.plugin.spi.PersistenceProviderAdaptor;
 import org.jipijapa.plugin.spi.PersistenceUnitMetadata;
+import org.jipijapa.plugin.spi.Platform;
 
 /**
  * Implements the {@link PersistenceProviderAdaptor} for OpenJPA 2.x.
@@ -63,6 +64,12 @@ public class OpenJPAPersistenceProviderAdaptor implements PersistenceProviderAda
     public void injectJtaManager(JtaManager jtaManager) {
 
     }
+
+    @Override
+    public void injectPlatform(Platform platform) {
+
+    }
+
 
     @Override
     public void addProviderDependencies(PersistenceUnitMetadata pu) {

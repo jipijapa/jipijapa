@@ -35,6 +35,7 @@ import org.jipijapa.plugin.spi.JtaManager;
 import org.jipijapa.plugin.spi.ManagementAdaptor;
 import org.jipijapa.plugin.spi.PersistenceProviderAdaptor;
 import org.jipijapa.plugin.spi.PersistenceUnitMetadata;
+import org.jipijapa.plugin.spi.Platform;
 import org.jipijapa.plugin.spi.TwoPhaseBootstrapCapable;
 
 /**
@@ -45,6 +46,7 @@ import org.jipijapa.plugin.spi.TwoPhaseBootstrapCapable;
 public class HibernatePersistenceProviderAdaptor implements PersistenceProviderAdaptor, TwoPhaseBootstrapCapable {
 
     private volatile JtaManager jtaManager;
+    private volatile Platform platform;
     private static final String SHARED_CACHE_MODE = "javax.persistence.sharedCache.mode";
     private static final String NONE = SharedCacheMode.NONE.name();
 
@@ -71,6 +73,13 @@ public class HibernatePersistenceProviderAdaptor implements PersistenceProviderA
 */
     }
 
+    @Override
+    public void injectPlatform(Platform platform) {
+        if (this.platform != platform) {
+            this.platform = platform;
+        }
+    }
+
     @SuppressWarnings("deprecation")
     @Override
     public void addProviderProperties(Map properties, PersistenceUnitMetadata pu) {
@@ -90,6 +99,12 @@ public class HibernatePersistenceProviderAdaptor implements PersistenceProviderA
         final Properties properties = pu.getProperties();
         final String sharedCacheMode = properties.getProperty(SHARED_CACHE_MODE);
 
+        if ( Classification.NONE.equals(platform.defaultCacheClassification())) {
+            if (!SharedCacheMode.NONE.equals(pu.getSharedCacheMode())) {
+                JPA_LOGGER.tracef("second level cache is not supported in platform, ignoring shared cache mode");
+            }
+            pu.setSharedCacheMode(SharedCacheMode.NONE);
+        }
         // check if 2lc is explicitly disabled which takes precedence over other settings
         boolean sharedCacheDisabled = SharedCacheMode.NONE.equals(pu.getSharedCacheMode())
                 ||
