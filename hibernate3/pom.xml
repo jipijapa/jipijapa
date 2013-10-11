@@ -25,12 +25,12 @@
     <parent>
         <groupId>org.jipijapa</groupId>
         <artifactId>jipijapa-parent</artifactId>
-        <version>1.0.0.Beta3-SNAPSHOT</version>
+        <version>1.0.0.Beta3</version>
     </parent>
 
     <groupId>org.jipijapa</groupId>
     <artifactId>jipijapa-hibernate3</artifactId>
-    <version>1.0.0.Beta3-SNAPSHOT</version>
+    <version>1.0.0.Beta3</version>
     <name>jipijapa Hibernate 3.6.x integration</name>
 
     <dependencies>
