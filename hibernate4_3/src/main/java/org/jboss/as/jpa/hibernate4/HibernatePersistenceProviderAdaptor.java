@@ -83,6 +83,7 @@ public class HibernatePersistenceProviderAdaptor implements PersistenceProviderA
     @SuppressWarnings("deprecation")
     @Override
     public void addProviderProperties(Map properties, PersistenceUnitMetadata pu) {
+        putPropertyIfAbsent(pu, properties, AvailableSettings.JPAQL_STRICT_COMPLIANCE, "true"); // JIPI-24 ignore jpql aliases case
         putPropertyIfAbsent(pu, properties, Configuration.USE_NEW_ID_GENERATOR_MAPPINGS, "true");
         putPropertyIfAbsent(pu, properties, org.hibernate.ejb.AvailableSettings.SCANNER, HibernateArchiveScanner.class.getName());
         properties.put(AvailableSettings.APP_CLASSLOADER, pu.getClassLoader());
