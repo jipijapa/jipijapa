@@ -16,7 +16,7 @@
  */
 
 package org.jipijapa.management.spi;
-// todo: package org.jipijapa.spi.jpaint; but take statistisc out of package name
+
 import javax.persistence.EntityManagerFactory;
 
 /**
@@ -27,8 +27,13 @@ import javax.persistence.EntityManagerFactory;
 public interface EntityManagerFactoryAccess {
     /**
      * returns the entity manager factory that statistics should be obtained for.
+     *
+     * @throws IllegalStateException if scopedPersistenceUnitName is not found
+     *
+     * @param scopedPersistenceUnitName is persistence unit name scoped to the current platform
+     *
      * @return EntityManagerFactory
      */
-    EntityManagerFactory entityManagerFactory(String scopedPersistenceUnitName);
+    EntityManagerFactory entityManagerFactory(String scopedPersistenceUnitName) throws IllegalStateException;
 
 }
