@@ -24,7 +24,7 @@
 
     <groupId>org.jipijapa</groupId>
     <artifactId>jipijapa-parent</artifactId>
-    <version>1.0.0.CR2</version>
+    <version>1.0.0.Final</version>
     <packaging>pom</packaging>
     <description>JipiJapa parent POM.</description>
     <url>http://www.jboss.org</url>
