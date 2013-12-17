@@ -43,7 +43,8 @@ public class HibernateStatistics extends HibernateAbstractStatistics {
     public static final String OPERATION_CLEAR = "clear";
     public static final String OPERATION_EVICTALL = "evict-all";
     public static final String OPERATION_SUMMARY = "summary";
-    public static final String OPERATION_STATISTICS_ENABLED = "enabled";
+    public static final String OPERATION_STATISTICS_ENABLED_DEPRECATED = "enabled";    // deprecated by JIPI-28
+    public static final String OPERATION_STATISTICS_ENABLED = "statistics-enabled";
     public static final String OPERATION_ENTITY_DELETE_COUNT = "entity-delete-count";
     public static final String OPERATION_ENTITY_INSERT_COUNT = "entity-insert-count";
     public static final String OPERATION_ENTITY_LOAD_COUNT = "entity-load-count";
@@ -99,6 +100,10 @@ public class HibernateStatistics extends HibernateAbstractStatistics {
         operations.put(OPERATION_STATISTICS_ENABLED, statisticsEnabled);
         types.put(OPERATION_STATISTICS_ENABLED, Boolean.class);
         writeableNames.add(OPERATION_STATISTICS_ENABLED);   // make 'enabled' writeable
+
+        operations.put(OPERATION_STATISTICS_ENABLED_DEPRECATED, statisticsEnabled);
+        types.put(OPERATION_STATISTICS_ENABLED_DEPRECATED, Boolean.class);
+        writeableNames.add(OPERATION_STATISTICS_ENABLED_DEPRECATED);   // make 'enabled' writeable
 
         operations.put(OPERATION_ENTITY_DELETE_COUNT, entityDeleteCount);
         types.put(OPERATION_ENTITY_DELETE_COUNT, Long.class);
