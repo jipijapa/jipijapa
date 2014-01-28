@@ -24,7 +24,7 @@
     <groupId>org.jipijapa</groupId>
     <artifactId>build-config</artifactId>
     <name>Build Configuration</name>
-    <version>1.0.1.Final</version>
+    <version>1.0.2-SNAPSHOT</version>
 
     <description>build configuration for JipiJapa.</description>
     <url>http://www.jboss.org</url>

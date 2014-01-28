@@ -25,12 +25,12 @@
     <parent>
         <groupId>org.jipijapa</groupId>
         <artifactId>jipijapa-parent</artifactId>
-        <version>1.0.1.Final</version>
+        <version>1.0.2-SNAPSHOT</version>
     </parent>
 
     <groupId>org.jipijapa</groupId>
     <artifactId>jipijapa-hibernate4-3</artifactId>
-    <version>1.0.1.Final</version>
+    <version>1.0.2-SNAPSHOT</version>
     
     <name>jipijapa Hibernate 4.3.x (JPA 2.1) integration</name>
 
