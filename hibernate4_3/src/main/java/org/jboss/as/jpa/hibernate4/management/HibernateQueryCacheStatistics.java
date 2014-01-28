@@ -120,7 +120,7 @@ public class HibernateQueryCacheStatistics extends HibernateAbstractStatistics {
     private Operation queryExecutionCount = new Operation() {
         @Override
         public Object invoke(Object... args) {
-            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getStatisticName(args));
+            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getQueryName(args));
             return Long.valueOf(statistics != null ? statistics.getExecutionCount() : 0);
         }
     };
@@ -128,7 +128,7 @@ public class HibernateQueryCacheStatistics extends HibernateAbstractStatistics {
     private Operation queryExecutionMaximumTime = new Operation() {
         @Override
         public Object invoke(Object... args) {
-            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getStatisticName(args));
+            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getQueryName(args));
             return Long.valueOf(statistics != null ? statistics.getExecutionMaxTime() : 0);
         }
     };
@@ -136,7 +136,7 @@ public class HibernateQueryCacheStatistics extends HibernateAbstractStatistics {
     private Operation queryExecutionRowCount = new Operation() {
         @Override
         public Object invoke(Object... args) {
-            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getStatisticName(args));
+            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getQueryName(args));
             return Long.valueOf(statistics != null ? statistics.getExecutionRowCount() : 0);
         }
     };
@@ -144,7 +144,7 @@ public class HibernateQueryCacheStatistics extends HibernateAbstractStatistics {
     private Operation queryExecutionAverageTime = new Operation() {
         @Override
         public Object invoke(Object... args) {
-            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getStatisticName(args));
+            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getQueryName(args));
             return Long.valueOf(statistics != null ? statistics.getExecutionAvgTime() : 0);
         }
     };
@@ -152,7 +152,7 @@ public class HibernateQueryCacheStatistics extends HibernateAbstractStatistics {
     private Operation queryExecutionMinimumTime = new Operation() {
         @Override
         public Object invoke(Object... args) {
-            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getStatisticName(args));
+            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getQueryName(args));
             return Long.valueOf(statistics != null ? statistics.getExecutionMinTime() : 0);
         }
     };
@@ -160,7 +160,7 @@ public class HibernateQueryCacheStatistics extends HibernateAbstractStatistics {
     private Operation queryCacheHitCount = new Operation() {
         @Override
         public Object invoke(Object... args) {
-            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getStatisticName(args));
+            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getQueryName(args));
             return Long.valueOf(statistics != null ? statistics.getCacheHitCount() : 0);
         }
     };
@@ -168,7 +168,7 @@ public class HibernateQueryCacheStatistics extends HibernateAbstractStatistics {
     private Operation queryCacheMissCount = new Operation() {
         @Override
         public Object invoke(Object... args) {
-            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getStatisticName(args));
+            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getQueryName(args));
             return Long.valueOf(statistics != null ? statistics.getCacheMissCount() : 0);
         }
     };
@@ -176,7 +176,7 @@ public class HibernateQueryCacheStatistics extends HibernateAbstractStatistics {
     private Operation queryCachePutCount = new Operation() {
         @Override
         public Object invoke(Object... args) {
-            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getStatisticName(args));
+            org.hibernate.stat.QueryStatistics statistics = getStatistics(getEntityManagerFactory(args), getQueryName(args));
             return Long.valueOf(statistics != null ? statistics.getCachePutCount() : 0);
         }
     };
@@ -184,8 +184,33 @@ public class HibernateQueryCacheStatistics extends HibernateAbstractStatistics {
     private Operation showQueryName = new Operation() {
         @Override
         public Object invoke(Object... args) {
-            return getStatisticName(args);
+            String displayQueryName = getQueryName(args);
+            EntityManagerFactory entityManagerFactory = getEntityManagerFactory(args);
+            if (displayQueryName != null && entityManagerFactory != null) {
+                HibernateEntityManagerFactory entityManagerFactoryImpl = (HibernateEntityManagerFactory) entityManagerFactory;
+                SessionFactory sessionFactory = entityManagerFactoryImpl.getSessionFactory();
+                // convert displayed (transformed by QueryNames) query name to original query name
+                if (sessionFactory != null) {
+                    String[] originalQueryNames = sessionFactory.getStatistics().getQueries();
+                    if (originalQueryNames != null) {
+                        for (String originalQueryName : originalQueryNames) {
+                            if (QueryName.queryName(originalQueryName).getDisplayName().equals(displayQueryName)) {
+                                return originalQueryName;
+                            }
+                        }
+                    }
+                }
+
+            }
+            return null;
         }
     };
 
+    private String getQueryName(Object... args) {
+        PathAddress pathAddress = getPathAddress(args);
+        if (pathAddress != null) {
+            return pathAddress.getValue(HibernateStatistics.QUERYCACHE);
+        }
+        return null;
+    }
 }
