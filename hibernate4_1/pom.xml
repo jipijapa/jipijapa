@@ -46,77 +46,39 @@
         <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging</artifactId>
-            <version>${version.org.jboss.logging.jboss-logging}</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging-processor</artifactId>
-            <version>${version.org.jboss.logging.jboss-logging-processor}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>jul-to-slf4j-stub</artifactId>
-            <version>${version.org.jboss.logging.jul-to-slf4j-stub}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.logmanager</groupId>
-            <artifactId>jboss-logmanager</artifactId>
-            <version>${version.org.jboss.logmanager.jboss-logmanager}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.logmanager</groupId>
-            <artifactId>log4j-jboss-logmanager</artifactId>
-            <version>${version.org.jboss.logmanager.log4j-jboss-logmanager}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.slf4j</groupId>
-            <artifactId>slf4j-jboss-logmanager</artifactId>
-            <version>${version.org.jboss.slf4j.slf4j-jboss-logmanager}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${version.org.slf4j}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate.common</groupId>
             <artifactId>hibernate-commons-annotations</artifactId>
-            <version>${version.org.hibernate4_1.commons.annotations}</version>
+            <version>${version.org.hibernate4_2.commons.annotations}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>${version.org.hibernate4_1}</version>
+            <version>${version.org.hibernate4_2}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>${version.org.hibernate4_1}</version>
+            <version>${version.org.hibernate4_2}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-infinispan</artifactId>
-            <version>${version.org.hibernate4_1}</version>
+            <version>${version.org.hibernate4_2}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -127,31 +89,20 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <version>${version.org.hibernate.javax.persistence.hibernate-jpa-2.0-api}</version>
-            <scope>provided</scope>
-        </dependency>
 
         <dependency>
             <groupId>org.jboss</groupId>
             <artifactId>jboss-vfs</artifactId>
-            <version>3.1.0.Final</version>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.spec.javax.annotation</groupId>
-            <artifactId>jboss-annotations-api_1.1_spec</artifactId>
-            <version>${version.org.jboss.spec.javax.annotation.jboss-annotations-api_1.1_spec}</version>
-            <scope>provided</scope>
+            <artifactId>jboss-annotations-api_1.2_spec</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.spec.javax.transaction</groupId>
-            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
-            <version>${version.org.jboss.spec.javax.transaction.jboss-transaction-api_1.1_spec}</version>
-            <scope>provided</scope>
+            <artifactId>jboss-transaction-api_1.2_spec</artifactId>
         </dependency>
 
     </dependencies>
