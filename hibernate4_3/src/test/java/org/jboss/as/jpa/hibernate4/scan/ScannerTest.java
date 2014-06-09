@@ -82,7 +82,7 @@ import static org.junit.Assert.fail;
 /**
  * @author Steve Ebersole
  */
-public class ScannerTests {
+public class ScannerTest {
 	protected static ClassLoader originalClassLoader = Thread.currentThread().getContextClassLoader();
 	protected static ClassLoader bundleClassLoader;
 
@@ -106,7 +106,7 @@ public class ScannerTests {
 		// we make an assumption here that the directory which holds compiled classes (nested) also holds
 		// sources.   We therefore look for our module directory name, and use that to locate bundles
 		final URL scannerTestsClassFileUrl = originalClassLoader.getResource(
-				ScannerTests.class.getName().replace( '.', '/' ) + ".class"
+				ScannerTest.class.getName().replace( '.', '/' ) + ".class"
 		);
 		if ( scannerTestsClassFileUrl == null ) {
 			// blow up

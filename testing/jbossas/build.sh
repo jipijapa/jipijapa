@@ -8,7 +8,7 @@ then
  echo "reuse existing AS build source tree"
 else
  echo "git clone AS build source tree"
- git clone git://github.com/jbossas/jboss-as.git as
+ git clone https://github.com/wildfly/wildfly.git as
 fi
 
 cd as
