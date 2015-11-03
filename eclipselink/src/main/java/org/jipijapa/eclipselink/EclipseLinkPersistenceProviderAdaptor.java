@@ -17,14 +17,14 @@
 
 package org.jipijapa.eclipselink;
 
-import java.util.Map;
-
 import org.jboss.logging.Logger;
 import org.jipijapa.plugin.spi.JtaManager;
 import org.jipijapa.plugin.spi.ManagementAdaptor;
 import org.jipijapa.plugin.spi.PersistenceProviderAdaptor;
 import org.jipijapa.plugin.spi.PersistenceUnitMetadata;
 import org.jipijapa.plugin.spi.Platform;
+
+import java.util.Map;
 
 public class EclipseLinkPersistenceProviderAdaptor implements
         PersistenceProviderAdaptor {
@@ -69,7 +69,7 @@ public class EclipseLinkPersistenceProviderAdaptor implements
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public void addProviderProperties(Map properties, PersistenceUnitMetadata pu) {
-        if (!properties.containsKey(ECLIPSELINK_TARGET_SERVER)) {
+        if (!properties.containsKey(ECLIPSELINK_TARGET_SERVER) && !pu.getProperties().containsKey(ECLIPSELINK_TARGET_SERVER)) {
             properties.put(ECLIPSELINK_TARGET_SERVER, JBossAS7ServerPlatform.class.getName());
             properties.put(ECLIPSELINK_ARCHIVE_FACTORY, JBossArchiveFactoryImpl.class.getName());
             properties.put(ECLIPSELINK_LOGGING_LOGGER, JBossLogger.class.getName());
